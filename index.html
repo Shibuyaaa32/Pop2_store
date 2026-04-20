@@ -3,120 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>(ร้านPOPค้าของเก่า)</title>
+    <title>(ร้านPOPค้าของเก่า) - สาขา 2</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js">
-        function openCustomModal() {
-            document.getElementById('customName').value = '';
-            document.getElementById('customPrice').value = '';
-            document.getElementById('customWeight').value = '';
-            setActiveInput('customPrice'); 
-            document.getElementById('customModal').style.display = 'flex';
-        }
-
-        function confirmAddCustom() {
-            let name = document.getElementById('customName').value.trim();
-            if (!name) name = 'รายการอื่นๆ';
-
-            let priceExpr = document.getElementById('customPrice').value.trim();
-            let price = evaluateExpression(priceExpr);
-            if (price <= 0) return alert('กรุณาระบุราคาให้ถูกต้อง (มากกว่า 0)');
-
-            let weightExpr = document.getElementById('customWeight').value.trim();
-            let weight = evaluateExpression(weightExpr);
-            if (weight === 0) return alert('กรุณาระบุจำนวนหรือน้ำหนักให้ถูกต้อง');
-
-            cart.push({
-                id: Date.now() + Math.random(),
-                productId: 'custom-' + Date.now(),
-                name: name,
-                category: "อื่นๆ",
-                price: price,
-                weight: weight,
-                weightString: weightExpr,
-                total: price * weight
-            });
-
-            closeModal('customModal');
-            updateCartUI();
-        }
-
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js">
-        function openCustomModal() {
-            document.getElementById('customName').value = '';
-            document.getElementById('customPrice').value = '';
-            document.getElementById('customWeight').value = '';
-            setActiveInput('customPrice'); 
-            document.getElementById('customModal').style.display = 'flex';
-        }
-
-        function confirmAddCustom() {
-            let name = document.getElementById('customName').value.trim();
-            if (!name) name = 'รายการอื่นๆ';
-
-            let priceExpr = document.getElementById('customPrice').value.trim();
-            let price = evaluateExpression(priceExpr);
-            if (price <= 0) return alert('กรุณาระบุราคาให้ถูกต้อง (มากกว่า 0)');
-
-            let weightExpr = document.getElementById('customWeight').value.trim();
-            let weight = evaluateExpression(weightExpr);
-            if (weight === 0) return alert('กรุณาระบุจำนวนหรือน้ำหนักให้ถูกต้อง');
-
-            cart.push({
-                id: Date.now() + Math.random(),
-                productId: 'custom-' + Date.now(),
-                name: name,
-                category: "อื่นๆ",
-                price: price,
-                weight: weight,
-                weightString: weightExpr,
-                total: price * weight
-            });
-
-            closeModal('customModal');
-            updateCartUI();
-        }
-
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js">
-        function openCustomModal() {
-            document.getElementById('customName').value = '';
-            document.getElementById('customPrice').value = '';
-            document.getElementById('customWeight').value = '';
-            setActiveInput('customPrice'); 
-            document.getElementById('customModal').style.display = 'flex';
-        }
-
-        function confirmAddCustom() {
-            let name = document.getElementById('customName').value.trim();
-            if (!name) name = 'รายการอื่นๆ';
-
-            let priceExpr = document.getElementById('customPrice').value.trim();
-            let price = evaluateExpression(priceExpr);
-            if (price <= 0) return alert('กรุณาระบุราคาให้ถูกต้อง (มากกว่า 0)');
-
-            let weightExpr = document.getElementById('customWeight').value.trim();
-            let weight = evaluateExpression(weightExpr);
-            if (weight === 0) return alert('กรุณาระบุจำนวนหรือน้ำหนักให้ถูกต้อง');
-
-            cart.push({
-                id: Date.now() + Math.random(),
-                productId: 'custom-' + Date.now(),
-                name: name,
-                category: "อื่นๆ",
-                price: price,
-                weight: weight,
-                weightString: weightExpr,
-                total: price * weight
-            });
-
-            closeModal('customModal');
-            updateCartUI();
-        }
-
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
 
     <style>
         :root { --primary: #2563eb; --primary-light: #eff6ff; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --dark: #1e293b; --bg: #f1f5f9; --card: #ffffff; --border: #e2e8f0; --text-main: #334155; --text-muted: #64748b; }
@@ -183,7 +75,6 @@
         .summary-total { font-size: 32px; font-weight: 700; color: var(--primary); margin-top: 5px;}
         .weight-summary-box { background: var(--bg); padding: 12px 16px; border-radius: 12px; margin-bottom: 15px; font-size: 14px; border: 1px solid var(--border);}
         
-        /* แก้ไขแถบตะกร้ามือถือให้ซ่อนเฉพาะในจอคอม */
         .mobile-cart-bar { display: none; }
         
         @media (max-width: 900px) { 
@@ -192,8 +83,6 @@
             .items-grid { padding-bottom: 100px; overflow-y: visible; } 
             .right-panel { position: fixed; top: 100vh; left: 0; width: 100%; height: 100dvh; border-radius: 0; padding: 20px; box-shadow: 0 -10px 40px rgba(0,0,0,0.15); transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 200; padding-bottom: env(safe-area-inset-bottom, 20px); } 
             .right-panel.show { top: 0; } 
-            
-            /* แถบตะกร้าในมือถือจะแสดงตลอดเวลา */
             .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 20px; left: 5%; width: 90%; background: var(--dark); color: white; padding: 14px 24px; border-radius: 100px; box-shadow: 0 10px 25px rgba(30, 41, 59, 0.4); z-index: 150; cursor: pointer; transition: transform 0.2s; }
             .mobile-cart-bar:active { transform: scale(0.97); }
             .close-cart-btn { display: inline-block; background: #f1f5f9; color: var(--text-main); border: none; padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 14px; margin-left: auto; cursor: pointer; }
@@ -259,17 +148,14 @@
                 <button class="num-btn" onclick="numPress('8')">8</button>
                 <button class="num-btn" onclick="numPress('9')">9</button>
                 <button class="num-btn btn-op" onclick="numPress('+')">+</button>
-                
                 <button class="num-btn" onclick="numPress('4')">4</button>
                 <button class="num-btn" onclick="numPress('5')">5</button>
                 <button class="num-btn" onclick="numPress('6')">6</button>
                 <button class="num-btn btn-op" style="color: var(--danger); background: #fee2e2; border-color: #fca5a5; box-shadow: 0 2px 0 #fca5a5;" onclick="numPress('-')">-</button>
-                
                 <button class="num-btn" onclick="numPress('1')">1</button>
                 <button class="num-btn" onclick="numPress('2')">2</button>
                 <button class="num-btn" onclick="numPress('3')">3</button>
                 <button class="num-btn btn-del" onclick="numDel()">⌫</button>
-                
                 <button class="num-btn" style="color: var(--danger); font-weight: bold;" onclick="numClear()">C</button>
                 <button class="num-btn" onclick="numPress('0')">0</button>
                 <button class="num-btn" onclick="numPress('.')">.</button>
@@ -283,15 +169,11 @@
         </div>
     </div>
 
-    
-    <!-- Modal สำหรับรายการอื่นๆ กำหนดชื่อและราคาเอง -->
     <div class="modal-overlay" id="customModal">
         <div class="modal-content" style="text-align: center;">
             <h2 style="margin-bottom: 15px; color: var(--dark); font-size: 22px;">➕ เพิ่มรายการอื่นๆ</h2>
-            
             <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">ชื่อรายการ</label>
             <input type="text" id="customName" placeholder="เช่น เหล็กพิเศษ, หักค่าบริการ..." style="width: 100%; padding: 12px; font-size: 18px; border: 2px solid var(--border); border-radius: 12px; margin-bottom: 15px; color: var(--dark); font-weight: 600; background: #f8fafc; outline: none; font-family: 'Prompt';" onfocus="activeInputId = null; document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active')); this.style.borderColor = 'var(--primary)'; this.style.background = '#fff';" onblur="this.style.borderColor = 'var(--border)'; this.style.background = '#f8fafc';">
-            
             <div style="display: flex; gap: 10px;">
                 <div style="flex: 1;">
                     <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">ราคา (บาท/หน่วย)</label>
@@ -308,17 +190,14 @@
                 <button class="num-btn" onclick="numPress('8')">8</button>
                 <button class="num-btn" onclick="numPress('9')">9</button>
                 <button class="num-btn btn-op" onclick="numPress('+')">+</button>
-                
                 <button class="num-btn" onclick="numPress('4')">4</button>
                 <button class="num-btn" onclick="numPress('5')">5</button>
                 <button class="num-btn" onclick="numPress('6')">6</button>
                 <button class="num-btn btn-op" style="color: var(--danger); background: #fee2e2; border-color: #fca5a5; box-shadow: 0 2px 0 #fca5a5;" onclick="numPress('-')">-</button>
-                
                 <button class="num-btn" onclick="numPress('1')">1</button>
                 <button class="num-btn" onclick="numPress('2')">2</button>
                 <button class="num-btn" onclick="numPress('3')">3</button>
                 <button class="num-btn btn-del" onclick="numDel()">⌫</button>
-                
                 <button class="num-btn" style="color: var(--danger); font-weight: bold;" onclick="numClear()">C</button>
                 <button class="num-btn" onclick="numPress('0')">0</button>
                 <button class="num-btn" onclick="numPress('.')">.</button>
@@ -331,7 +210,8 @@
             </div>
         </div>
     </div>
-<div class="modal-overlay" id="historyModal">
+
+    <div class="modal-overlay" id="historyModal">
         <div class="modal-content">
             <h2 style="margin-bottom: 15px; text-align: center; color: var(--dark); font-size: 20px;">📜 ประวัติ / สรุปยอด</h2>
             <div style="background: var(--bg); padding: 12px; border-radius: 12px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; justify-content: space-between; border: 1px solid var(--border);">
@@ -354,6 +234,7 @@
                 <div style="display: flex; justify-content: space-between; color: #334155;"><span>⚙️ เลสรวม:</span><strong id="sumStainless">0.0</strong></div>
             </div>
             <div id="historyList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px; background: #f8fafc; border-radius: 12px; padding: 10px;"></div>
+            
             <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                 <button class="btn-modal" style="background: var(--dark); color: white; flex: 1;" onclick="printSummary()">🖨️ พิมพ์สรุป</button>
                 <button class="btn-modal" style="background: #10b981; color: white; flex: 1;" onclick="exportToCSV()">📊 โหลด Excel</button>
@@ -368,19 +249,23 @@
     <div id="printArea"></div>
 
     <script>
+        // ข้อมูล Firebase สำหรับ pop2 (ถูกต้อง 100%)
         const firebaseConfig = {
-  apiKey: "AIzaSyCxFoL6fkV8Vy900VsbRNWEs642gXuG_AE",
-  authDomain: "pop2-e301c.firebaseapp.com",
-  databaseURL: "https://pop2-e301c-default-rtdb.firebaseio.com",
-  projectId: "pop2-e301c",
-  storageBucket: "pop2-e301c.firebasestorage.app",
-  messagingSenderId: "186999001428",
-  appId: "1:186999001428:web:2f62fff60937f20b1fb8c1",
-  measurementId: "G-98WRWGXH8K"
-};
-        firebase.initializeApp(firebaseConfig); firebase.analytics(); const db = firebase.database();
+            apiKey: "AIzaSyCxFoL6fkV8Vy900VsbRNWEs642gXuG_AE",
+            authDomain: "pop2-e301c.firebaseapp.com",
+            databaseURL: "https://pop2-e301c-default-rtdb.firebaseio.com",
+            projectId: "pop2-e301c",
+            storageBucket: "pop2-e301c.firebasestorage.app",
+            messagingSenderId: "186999001428",
+            appId: "1:186999001428:web:2f62fff60937f20b1fb8c1",
+            measurementId: "G-98WRWGXH8K"
+        };
+        firebase.initializeApp(firebaseConfig); 
+        firebase.analytics(); 
+        const db = firebase.database();
         let globalBills = [];
 
+        // รายการสินค้า
         let products = [
             { id: 1, name: "ล.หนา", category: "เหล็ก", price: 10.7, img: "https://static.wixstatic.com/media/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg" },
             { id: 2, name: "ล.ธรรมดา", category: "เหล็ก", price: 10.3, img: "https://static.wixstatic.com/media/fbf885_a1368c183d92470dbe7a575fa82d0350~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_a1368c183d92470dbe7a575fa82d0350~mv2.jpg" },
@@ -396,422 +281,304 @@
             { id: 12, name: "สี", category: "พลาสติก", price: 4.0, img: "https://inwfile.com/s-d/xztvab.jpg" },
             { id: 13, name: "ดำ", category: "พลาสติก", price: 1.5, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9kWDzMxan8qJNQJsXeWyHbOnD8g_QXuhcLA&s" },
             { id: 14, name: "กรอบ", category: "พลาสติก", price: 2.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBncwQIP9V8Rru5Gvu9yWbwRkDOc47cY7VDQ&s" },
-            { id: 15, name: "ติกรวม", category: "พลาสติก", price: 6.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0IfVme51rDYNbJQoK9d-vot3EMOw5bWj50A&s" },
-            { id: 16, name: "ถุง PE", category: "พลาสติก", price: 4.0, img: "https://image.makewebcdn.com/makeweb/m_1920x0/vempXb0Oo/Products/UTB8HoMPwo_4iuJk43Fqq6z_FpXan.jpg" },
-            { id: 17, name: "ถุงรวม", category: "พลาสติก", price: 2.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqjZrU-8pRnqFgumOg85XSaUEqYDGmzPCzsA&s" },
-            { id: 18, name: "PVC (สีฟ้า)", category: "PVC", price: 3.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdcE3fLuxzq-eqq9rLnWpdHZiQMYRU2mmGLQ&s" },
-            { id: 19, name: "PVC (สีเหลือง)", category: "PVC", price: 1.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0J449fdjV4LtXDeph26hqhXY9TmmjuCOKxg&s" },
-            { id: 20, name: "PE ท่อดำ", category: "PVC", price: 2.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4efRGuMA_slTLpkdwRQLQqnz_kWCWAzocwg&s" },
-            { id: 21, name: "สายยาง", category: "PVC", price: 1.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1K7uN2q85mWqzoCTWd4VK3pduhhUJf5i4Qw&s" },
-            { id: 22, name: "เปลือกสาย", category: "PVC", price: 1.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3U6nhNE5zAS4b6eWXlo-_GH-B_ZgL4T_zMA&s" },
-            { id: 23, name: "ป๋องล.", category: "สังกะสี", price: 3.0, img: "https://media.yellowpages.co.th/olc250/4094806/4094806_10.jpg" },
-            { id: 24, name: "สังกะสี", category: "สังกะสี", price: 3.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtz5EzFJaRCamsAp8wjxt9MWG1vnS0REhCWw&s" },
-            { id: 25, name: "ปอก", category: "ทองแดง", price: 360.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9xTbm8kPHiaPR_z4VnpaTgtctV-_OvTi8rw&s" },
-            { id: 26, name: "ช็อต", category: "ทองแดง", price: 350.0, img: "https://image.makewebcdn.com/makeweb/m_1920x0/Bo6IhggdS/Products/S__8372229.jpg?v=202405291424" },
-            { id: 27, name: "ใหญ่", category: "ทองแดง", price: 330.0, img: "https://image.makewebcdn.com/makeweb/m_1920x0/Bo6IhggdS/Products/MILLBERY_NO_1.png?v=202405291424" },
-            { id: 28, name: "เล็ก", category: "ทองแดง", price: 320.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShy7lr8rHiplwRMqiWkVx1ONxbPKiXATVmSQ&s" },
-            { id: 29, name: "เผา", category: "ทองแดง", price: 310.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKavetfTq7yVz6HrrcowTqaX6eaDPON-jwBQ&s" },
-            { id: 30, name: "ชุป", category: "ทองแดง", price: 300.0, img: "https://honestcable.com/wp-content/uploads/2025/10/Bare-vs-Tinned-Copper-Wire.jpg" },
-            { id: 31, name: "เหลือง", category: "ทองเหลือง", price: 190.0, img: "https://www.maxsteelthai.com/wp-content/uploads/2019/08/image621.png" },
-            { id: 32, name: "น.หนา", category: "เนียม", price: 55.0, img: "https://www.guenter.co.th/wp-content/uploads/2022/12/%E0%B8%AD%E0%B8%A5%E0%B8%B9%E0%B8%A1%E0%B8%B4%E0%B9%80%E0%B8%99%E0%B8%B5%E0%B8%A2%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%99-Aluminum-Flat-Bar-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%82%E0%B8%99%E0%B8%B2%E0%B8%94-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B2-%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%80%E0%B8%95%E0%B9%87%E0%B8%A1-%E0%B8%AA%E0%B8%B1%E0%B9%88%E0%B8%87%E0%B8%95%E0%B8%B1%E0%B8%94-Guenter.co_.th_.jpg" },
-            { id: 33, name: "น.บาง", category: "เนียม", price: 55.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-7Vvp9mG0Y-AlRNRCZ-KQk2PUSN3qDzBPvQ&s" },
-            { id: 34, name: "น.ฉาก", category: "เนียม", price: 65.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU94RpXGELZRavoq2Q73QIgSMQ01fNsNvwIw&s" },
-            { id: 35, name: "น.ป๋อง", category: "เนียม", price: 60.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-U7yKzclqv5tN7zqyofPZ-pYf6fQ1_jgQGg&s" },
-            { id: 36, name: "ล้อแม็ก", category: "เนียม", price: 73.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUm5s4riPPOhrHCOqdNHzXw2Ud0mGq9mcUeQ&s" },
-            { id: 37, name: "กะทะ", category: "เนียม", price: 35.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzAsi1wIibuW3EJdf_od_wa_-1J1Ef91fCA&s" },
-            { id: 38, name: "น.สายไฟ", category: "เนียม", price: 80.0, img: "https://www.recyclenow.in.th/wp-content/uploads/2018/05/alup.jpg" },
-            { id: 39, name: "ฝาแกะ", category: "เนียม", price: 25.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0rF_VD68Cf4EoZKAjgwWYfMu7gS0Hhrkl6A&s" },
-            { id: 40, name: "ฝาไม่แกะ", category: "เนียม", price: 10.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlPZhwvbSz8dRmlDinUF0ufeIMTqG9FI-TVw&s" },
-            { id: 41, name: "มุ้ง", category: "เนียม", price: 20.0, img: "https://img.lazcdn.com/g/p/f1f89c582d163eac0340a714fa79f413.jpg_720x720q80.jpg" },
-            { id: 42, name: "มู่ลี่", category: "เนียม", price: 25.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTniViW1_KkaFkNihQuWfdWfn-m1EF4fQr9uw&s" },
-            { id: 43, name: "น.อัลอย", category: "เนียม", price: 35.0, img: "https://naspaasia.com/wp-content/uploads/2018/08/6061-1-1.png" },
-            { id: 44, name: "หม้อน้ำแดง", category: "หม้อน้ำ", price: 150.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMcFFDViHcMRP7_rXVV_mMAk6F7m-MYUhsKA&s" },
-            { id: 45, name: "หม้อน้ำเหลือง", category: "หม้อน้ำ", price: 170.0, img: "https://i.ytimg.com/vi/aIO-JSftVXE/maxresdefault.jpg" },
-            { id: 46, name: "หม้อน้ำเนียม", category: "หม้อน้ำ", price: 40.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwR54acgP95-vk6OgZ7FrXHtztrlrfeysl7Q&s" },
-            { id: 47, name: "แบตใหญ่", category: "แบต", price: 23.0, img: "https://www.gsbattery.co.th/product/5ffb0082b7521.png" },
-            { id: 48, name: "แบตเล็ก", category: "แบต", price: 20.0, img: "https://www.spabattery.com/uploads/product/1045/1591950160_c5c105cfeebc789f2151f4fead005d54_278.jpeg" },
-            { id: 49, name: "TV BIG", category: "ตู้เย็น", price: 80.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtz5EzFJaRCamsAp8wjxt9MWG1vnS0REhCWw&s" },
-            { id: 50, name: "TV SMALL", category: "ตู้เย็น", price: 50.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_-N7zXvTWTu3T3GJFSekBVPYsqn88Hao_Ng&s" },
-            { id: 51, name: "จอแบน BIG", category: "ตู้เย็น", price: 20.0, img: "https://down-th.img.susercontent.com/file/sg-11134253-7rdy7-mdbac01prlfkfa" },
-            { id: 52, name: "จอแบน SMALL", category: "ตู้เย็น", price: 60.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMKYt_pqPnOuX4fdDR6DLOJNbFUN9fAAFkuw&s" },
-            { id: 53, name: "ตู้เย็นกลาง", category: "ตู้เย็น", price: 200.0, img: "https://filebroker-cdn.lazada.co.th/kf/Sb7ce49db70df4695a45174191480e9e34.jpg" },
-            { id: 54, name: "ตู้เย็นเล็ก", category: "ตู้เย็น", price: 150.0, img: "https://img.th.my-best.com/product_images/63317898d0892066c9f6d538a5e749f6.png?ixlib=rails-4.3.1&q=70&lossless=0&w=800&h=800&fit=clip&s=bc30dcb3b6bf8c66f1c3c96e5ffec5ea" },
-            { id: 55, name: "ตู้เย็นใหญ่", category: "ตู้เย็น", price: 250.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxJXJkPUDzs0sVVdDrJZLrSYEf9ex0w2XCFA&s" },
-            { id: 56, name: "เครื่องซักผ้า A", category: "ตู้เย็น", price: 200.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS9I3Dlv6Nu7cFFqLuW9LjbUBM0bY8AXLmaA&s" },
-            { id: 57, name: "เครื่องซักผ้า B", category: "ตู้เย็น", price: 150.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBZmk0W26cR9sehEOrg1iMi2b-Tav4tTPAMQ&s" },
-            { id: 58, name: "เลส", category: "เลส", price: 28.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr0D3xsZmA2o9q2nqmxVwpdEK11WdOATzfAA&s" },
-            { id: 59, name: "เลสตะกั่ว", category: "เลส", price: 20.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwK-QXxquVFuhTuI9EwZ-0lZNHqArRA74nkg&s" },
-            { id: 60, name: "ถอด น.A", category: "ถอด", price: 25.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
-            { id: 61, name: "ถอด น.B", category: "ถอด", price: 20.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
-            { id: 62, name: "ถอดหม้อ", category: "ถอด", price: 9.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
-            { id: 63, name: "ถอดรวม", category: "ถอด", price: 15.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
-            { id: 64, name: "ถอดพัดลม", category: "ถอด", price: 5.0, img: "https://f.ptcdn.info/608/029/000/1427041014-NewImage-o.jpg" },
-            { id: 65, name: "มอเตอร์ A", category: "ถอด", price: 25.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqV_cUCmj_PykBMiMtrhAInmdiQmlsH67XTQ&s" },
-            { id: 66, name: "มอเตอร์ B", category: "ถอด", price: 18.0, img: "https://inex.co.th/home/wp-content/uploads/2020/07/dc-motor6v.jpg" },
-            { id: 67, name: "แผงวงจร", category: "ถอด", price: 25.0, img: "https://f.ptcdn.info/829/073/000/quq9dn48mzNELN7Kq4jQ-o.png" },
-            { id: 68, name: "CD", category: "ถอด", price: 7.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDplJ_vSWLhdVWTXDydm_7G8xFcdcgME2S4w&s" },
-            { id: 69, name: "ลีโอ", category: "ลังเบียร์", price: 8.0, img: "https://down-th.img.susercontent.com/file/94141c21b2204ea7a99d5ffa42167615" },
-            { id: 70, name: "ช้าง", category: "ลังเบียร์", price: 13.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTWuvUUD5qblCQxpkHOCt6X6aoLi-ve2djw&s" },
-            { id: 71, name: "สิงห์", category: "ลังเบียร์", price: 7.0, img: "https://down-th.img.susercontent.com/file/th-11134207-7rasj-m9lj9x8itwj2ef" },
-            { id: 72, name: "เหล้า(ใหญ่)", category: "ลังเบียร์", price: 10.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrIgqCgSbF1qG4ZAIQplPJf0a0SDsJKp11Gw&s" },
-            { id: 73, name: "เหล้า(เล็ก)", category: "ลังเบียร์", price: 19.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5F4utWDjcVVLX3ywfyKOnX-MRwxd3hOdf3A&s" },
-            { id: 74, name: "หงส์(กลม)", category: "ลังเบียร์", price: 19.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSicsH6MoDmS8Cbue7I3Oof8_uF1CF0YRr_Cg&s" },
-            { id: 75, name: "หงส์(แบน)", category: "ลังเบียร์", price: 10.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjTSuJzzDm-1_XODbJsUHcuHgv_H2NY9bRGg&s" }
+            { id: 15, name: "ติกรวม", category: "พลาสติก", price: 6.0, img: "https://static.wixstatic.com/media/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg" }
         ];
 
-        let cart = []; let currentItem = null; let activeInputId = 'weightInput';
+        let cart = [];
+        let currentCategory = 'ทั้งหมด';
+        let activeProduct = null;
+        let activeInputId = 'weightInput';
 
-        function setupFirebaseListeners() {
-            db.ref('pos_custom_prices').on('value', (snapshot) => {
-                const savedPrices = snapshot.val() || {};
-                products.forEach(p => { if (savedPrices[p.id] !== undefined) p.price = savedPrices[p.id]; });
-                const activeCatBtn = document.querySelector('.cat-btn.active'); if(activeCatBtn) renderItems(activeCatBtn.innerText);
-            });
-            db.ref('pos_bills').on('value', (snapshot) => {
-                globalBills = []; snapshot.forEach(child => { globalBills.push({ key: child.key, ...child.val() }); });
-                if(document.getElementById('historyModal').style.display === 'flex') { renderHistoryUI(); }
-            });
+        function init() {
+            renderCategories();
+            renderProducts();
+            loadHistory();
         }
-        
-        function init() { setupFirebaseListeners(); renderCategories(); renderItems('ทั้งหมด'); }
 
         function renderCategories() {
+            const categories = ['ทั้งหมด', ...new Set(products.map(p => p.category))];
             const container = document.getElementById('categoryList');
-            const menuOrder = ['ทั้งหมด', 'เหล็ก', 'พลาสติก', 'ดาษ', 'ขวด', 'ลังเบียร์', 'เนียม', 'สังกะสี', 'ถอด', 'ทองแดง', 'ทองเหลือง', 'เลส', 'PVC', 'หม้อน้ำ', 'แบต', 'ตู้เย็น'];
-            const allCats = [...new Set(products.map(p => p.category))];
-            const finalOrder = menuOrder.filter(c => c === 'ทั้งหมด' || allCats.includes(c));
-            container.innerHTML = finalOrder.map(c => `<button class="cat-btn ${c==='ทั้งหมด'?'active':''}" onclick="filterCat(this, '${c}')">${c}</button>`).join('');
-        }
-
-        function filterCat(btn, cat) { document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderItems(cat); }
-
-        function renderItems(cat) {
-            const grid = document.getElementById('itemsGrid'); let html = '';
-            if (cat === 'ทั้งหมด') {
-                grid.style.display = 'block';
-                const customOrder = ['เหล็ก', 'พลาสติก', 'ดาษ', 'ขวด', 'ลังเบียร์', 'เนียม', 'สังกะสี', 'ถอด', 'ทองแดง', 'ทองเหลือง'];
-                const allAvailableCats = [...new Set(products.map(p => p.category))];
-                const finalDisplayOrder = [...customOrder.filter(c => allAvailableCats.includes(c)), ...allAvailableCats.filter(c => !customOrder.includes(c))];
-                finalDisplayOrder.forEach(c => {
-                    const itemsInCat = products.filter(p => p.category === c);
-                    if (itemsInCat.length > 0) {
-                        html += `<div style="margin-bottom: 25px;"><div style="display: flex; align-items: center; margin-bottom: 12px;"><span style="background: var(--primary); width: 6px; height: 18px; border-radius: 4px; margin-right: 8px;"></span><h3 style="font-size: 15px; font-weight: 600; color: var(--dark); margin: 0;">${c}</h3></div><div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">${itemsInCat.map(p => `<div class="item-card" onclick="openModal(${p.id})" style="flex: 0 0 120px;"><div class="category-label">${c}</div><img src="${p.img}" class="item-img" loading="lazy"><div class="item-info"><div class="item-name">${p.name}</div><div class="item-price">${p.price} ฿</div></div></div>`).join('')}</div></div>`;
-                    }
-                });
-            } else {
-                grid.style.display = 'grid';
-                const filtered = products.filter(p => p.category === cat);
-                html = filtered.map(p => `<div class="item-card" onclick="openModal(${p.id})"><div class="category-label">${cat}</div><img src="${p.img}" class="item-img" loading="lazy"><div class="item-info"><div class="item-name">${p.name}</div><div class="item-price">${p.price} ฿</div></div></div>`).join('');
-            }
-            grid.innerHTML = html;
-        }
-
-        function setActiveInput(id) { activeInputId = id; document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active')); document.getElementById(id).classList.add('active'); }
-        
-        function evaluateExpression(expr) {
-            if (!expr) return 0;
-            expr = expr.replace(/[+\-.]+$/, '');
-            if (expr === '') return 0;
-            try {
-                if (/^[0-9+\-.]+$/.test(expr)) {
-                    return Math.round(new Function('return ' + expr)() * 100) / 100;
-                }
-            } catch(e) {}
-            return 0;
-        }
-
-        function numPress(val) { 
-            const input = document.getElementById(activeInputId); 
-            let current = input.value;
-            
-            if (current === '0' && val === '-') { input.value = '-'; return; }
-            if (current === '' && val === '-') { input.value = '-'; return; }
-
-            const lastChar = current.slice(-1);
-            if (['+', '-', '.'].includes(val) && ['+', '-', '.'].includes(lastChar)) {
-                input.value = current.slice(0, -1) + val;
-                return;
-            }
-
-            if (current === '0' && !['.', '+', '-'].includes(val)) {
-                input.value = val; 
-            } else {
-                input.value += val; 
-            }
-        }
-        
-        function numDel() { const input = document.getElementById(activeInputId); input.value = input.value.slice(0, -1); }
-        function numClear() { document.getElementById(activeInputId).value = ''; }
-        function calcMath() {
-            const input = document.getElementById(activeInputId);
-            if(activeInputId === 'weightInput') {
-                const result = evaluateExpression(input.value);
-                if(result !== 0 || input.value === '0') input.value = result;
-            }
-        }
-
-        function openModal(id) {
-            currentItem = products.find(p => p.id === id); 
-            document.getElementById('modalItemName').innerText = currentItem.name; 
-            document.getElementById('priceEditBox').style.display = 'none';
-            updatePriceDisplay(); 
-            
-            document.getElementById('weightInput').value = ''; 
-            document.getElementById('weightModal').style.display = 'flex'; 
-            setActiveInput('weightInput');
-        }
-
-        function updatePriceDisplay() { document.getElementById('displayPriceText').innerText = `${currentItem.price.toFixed(2)} ฿/หน่วย`; document.getElementById('newPriceInput').value = currentItem.price; }
-        function toggleEditPrice() { const box = document.getElementById('priceEditBox'); if (box.style.display === 'none') { box.style.display = 'block'; setActiveInput('newPriceInput'); } else { box.style.display = 'none'; setActiveInput('weightInput'); } }
-        
-        function saveNewPrice() {
-            const newPrice = parseFloat(document.getElementById('newPriceInput').value);
-            if (newPrice >= 0) { currentItem.price = newPrice; updatePriceDisplay(); toggleEditPrice(); db.ref('pos_custom_prices/' + currentItem.id).set(newPrice); }
-        }
-
-        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-        
-        function confirmAddItem() { 
-            let weightExpr = document.getElementById('weightInput').value.trim();
-            let weight = evaluateExpression(weightExpr);
-            
-            if (weight === 0) return alert('กรุณาระบุน้ำหนักให้ถูกต้อง'); 
-
-            let existingItemIndex = cart.findIndex(i => i.productId === currentItem.id && i.price === currentItem.price);
-
-            if (existingItemIndex !== -1) {
-                let existingItem = cart[existingItemIndex];
-                let newExprPart = weightExpr;
-                if (!newExprPart.startsWith('+') && !newExprPart.startsWith('-')) {
-                    newExprPart = '+' + newExprPart;
-                }
-                existingItem.weightString = existingItem.weightString + newExprPart;
-                existingItem.weight += weight;
-                existingItem.total = existingItem.price * existingItem.weight;
-                
-            } else {
-                cart.push({ 
-                    id: Date.now() + Math.random(), 
-                    productId: currentItem.id,
-                    name: currentItem.name, 
-                    category: currentItem.category, 
-                    price: currentItem.price, 
-                    weight: weight, 
-                    weightString: weightExpr,
-                    total: currentItem.price * weight 
-                }); 
-            }
-            
-            closeModal('weightModal'); 
-            updateCartUI(); 
-        }
-
-        function toggleMobileCart() { document.getElementById('rightPanel').classList.toggle('show'); }
-
-        function updateCartUI() {
-            const list = document.getElementById('cartList'); let total = 0;
-            
-            list.innerHTML = cart.map(item => { 
-                total += item.total; 
-                let priceColor = item.total < 0 ? 'color: var(--danger);' : 'color: var(--primary);';
-                let weightDisplayColor = item.weight === 0 ? 'color: var(--danger);' : 'color: var(--text-muted);';
-
-                return `<div class="cart-item">
-                    <div class="cart-item-info">
-                        <b>${item.name}</b>
-                        <small style="${weightDisplayColor}">${item.weightString} = ${item.weight} กก. x ${item.price} ฿</small>
-                    </div>
-                    <div class="cart-item-price">
-                        <b style="${priceColor}">${item.total.toLocaleString(undefined, {minimumFractionDigits:2})} ฿</b><br>
-                        <button class="btn-remove" onclick="removeCart('${item.id}')">ลบ</button>
-                    </div>
-                </div>`; 
-            }).join('');
-            
-            const formattedTotal = total.toLocaleString(undefined, {minimumFractionDigits:2});
-            document.getElementById('grandTotal').innerText = formattedTotal;
-
-            const mobileCountStr = cart.length > 0 ? `${cart.length} รายการ` : '0 รายการ';
-            document.getElementById('mobileCartCount').innerText = mobileCountStr;
-            document.getElementById('mobileCartTotal').innerText = formattedTotal;
-        }
-
-        function removeCart(cartId) { 
-            cart = cart.filter(i => i.id != cartId); 
-            updateCartUI(); 
-        }
-
-        function renderReceiptHTML(billNo, date, items, totalAmount) {
-            return `<div class="slip-header"><h3 style="margin-bottom: 5px; font-size: 18px;">ร้านPOPค้าของเก่า</h3><p style="font-size: 12px; margin-bottom: 2px;">55/1/1หมู่ 17 ตำบลคลองนครเนื่องเขต</p><p style="font-size: 12px; margin-bottom: 2px;">อำเภอเมือง จังหวัดฉะเชิงเทรา 24000</p><p style="font-size: 12px; margin-bottom: 8px;">เบอร์ติดต่อ: 0897005720</p><p style="font-weight: bold; font-size: 14px;">ใบเสร็จรับเงิน</p><p>วันที่: ${date}</p><p>เลขที่บิล: ${billNo}</p></div>
-            <hr class="slip-divider">
-            <table class="slip-table">
-                <thead><tr><th>รายการ</th><th class="text-right">รวม(฿)</th></tr></thead>
-                <tbody>${items.map(item => `<tr><td>${item.name}<br><span style="color:#555">${item.weightString}=${item.weight} กก. x ${item.price}</span></td><td class="text-right" style="vertical-align: top;">${item.total.toLocaleString(undefined, {minimumFractionDigits: 2})}</td></tr>`).join('')}</tbody>
-            </table>
-            <hr class="slip-divider">
-            <div class="slip-total">ยอดสุทธิ: ${totalAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} บาท</div>
-            <div style="text-align: center; margin-top: 20px; font-size: 12px;">ขอบคุณที่ใช้บริการครับ</div>`;
-        }
-
-        function processCheckout(shouldPrint) {
-            if (cart.length === 0) return alert('กรุณาเพิ่มสินค้าลงในบิลก่อนครับ');
-            if (!confirm('ยืนยันการบันทึกยอดบิลนี้ใช่หรือไม่?')) return; 
-
-            const totalAmount = cart.reduce((sum, item) => sum + item.total, 0); 
-            const billNo = "B" + Date.now().toString().slice(-6); 
-            
-            const d = new Date();
-            const yyyy = d.getFullYear();
-            const mm = String(d.getMonth() + 1).padStart(2, '0');
-            const dd = String(d.getDate()).padStart(2, '0');
-            const dateOnly = `${yyyy}-${mm}-${dd}`; 
-            
-            const currentDate = d.toLocaleString('th-TH');
-            
-            const newBill = { billNo, date: currentDate, dateOnly: dateOnly, items: [...cart], total: totalAmount };
-            db.ref('pos_bills').push(newBill);
-
-            if (shouldPrint) { 
-                document.getElementById('printArea').innerHTML = renderReceiptHTML(billNo, currentDate, cart, totalAmount); 
-                window.print(); 
-            }
-            
-            cart = []; updateCartUI();
-            document.getElementById('rightPanel').classList.remove('show');
-        }
-
-        function getFilteredBills() {
-            const filterDate = document.getElementById('filterDate') ? document.getElementById('filterDate').value : '';
-            if (!filterDate) return globalBills; 
-            
-            return globalBills.filter(b => {
-                if (b.dateOnly) {
-                    return b.dateOnly === filterDate;
-                } else {
-                    const [fy, fm, fd] = filterDate.split('-');
-                    const searchAD = `${parseInt(fd)}/${parseInt(fm)}/${fy}`;
-                    const searchBE = `${parseInt(fd)}/${parseInt(fm)}/${parseInt(fy)+543}`;
-                    return b.date.includes(searchAD) || b.date.includes(searchBE) || b.date.includes(`${fd}/${fm}/${fy}`);
-                }
+            container.innerHTML = '';
+            categories.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `cat-btn ${cat === currentCategory ? 'active' : ''}`;
+                btn.innerText = cat;
+                btn.onclick = () => { currentCategory = cat; renderCategories(); renderProducts(); };
+                container.appendChild(btn);
             });
         }
 
-        function printOldBill(key) {
-            const bill = globalBills.find(b => b.key === key);
-            if(bill) {
-                document.getElementById('printArea').innerHTML = renderReceiptHTML(bill.billNo, bill.date, bill.items, bill.total);
-                window.print();
+        function renderProducts() {
+            const container = document.getElementById('itemsGrid');
+            container.innerHTML = '';
+            const filtered = currentCategory === 'ทั้งหมด' ? products : products.filter(p => p.category === currentCategory);
+            
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.onclick = () => openWeightModal(p);
+                card.innerHTML = `
+                    <div class="category-label">${p.category}</div>
+                    <img src="${p.img}" alt="${p.name}" class="item-img" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
+                    <div class="item-info">
+                        <div class="item-name">${p.name}</div>
+                        <div class="item-price">${p.price.toFixed(2)} ฿</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openWeightModal(product) {
+            activeProduct = product;
+            document.getElementById('modalItemName').innerText = product.name;
+            document.getElementById('displayPriceText').innerText = product.price.toFixed(2) + ' ฿/กก.';
+            document.getElementById('weightInput').value = '';
+            document.getElementById('priceEditBox').style.display = 'none';
+            setActiveInput('weightInput');
+            document.getElementById('weightModal').style.display = 'flex';
+        }
+
+        function evaluateExpression(expr) {
+            try {
+                if (!expr) return 0;
+                let sanitized = expr.replace(/[^-()\d/*+.]/g, '');
+                let result = new Function('return ' + sanitized)();
+                return isNaN(result) ? 0 : result;
+            } catch (e) {
+                return 0;
             }
         }
 
-        function renderHistoryUI() {
-            const historyList = document.getElementById('historyList'); 
-            const currentBills = getFilteredBills(); 
-            
-            let totalDayAmount = 0; let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
-            
-            if (currentBills.length === 0) { 
-                historyList.innerHTML = '<p style="text-align:center; color:#94a3b8; margin-top: 15px;">ไม่พบประวัติในวันที่เลือก</p>'; 
+        function numPress(val) {
+            if (!activeInputId) return;
+            let input = document.getElementById(activeInputId);
+            input.value += val;
+        }
+
+        function numDel() {
+            if (!activeInputId) return;
+            let input = document.getElementById(activeInputId);
+            input.value = input.value.slice(0, -1);
+        }
+
+        function numClear() {
+            if (!activeInputId) return;
+            document.getElementById(activeInputId).value = '';
+        }
+
+        function calcMath() {
+            if (!activeInputId) return;
+            let input = document.getElementById(activeInputId);
+            let result = evaluateExpression(input.value);
+            input.value = Number.isInteger(result) ? result : result.toFixed(2);
+        }
+
+        function toggleEditPrice() {
+            const box = document.getElementById('priceEditBox');
+            if (box.style.display === 'none') {
+                box.style.display = 'block';
+                document.getElementById('newPriceInput').value = activeProduct.price;
+                setActiveInput('newPriceInput');
             } else {
-                totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0);
-                currentBills.forEach(bill => { 
-                    bill.items.forEach(item => { 
-                        if (item.name === "ล.หนา") sumNa += item.weight; 
-                        if (item.name === "ล.ธรรมดา") sumTham += item.weight; 
-                        if (item.name === "ล.บาง") sumBang += item.weight; 
-                        if (item.category === "ทองแดง") sumCopper += item.weight; 
-                        if (item.category === "ทองเหลือง") sumBrass += item.weight; 
-                        if (item.category === "เลส") sumStainless += item.weight; 
-                    }); 
-                });
-                
-                historyList.innerHTML = currentBills.slice().reverse().map(bill => `
-                    <div class="history-item">
-                        <div class="history-item-header">
-                            <div><span style="font-weight: 600; color: var(--dark);">บิล: ${bill.billNo}</span> <span style="margin-left:8px;">${bill.date}</span></div>
-                            <div>
-                                <button onclick="printOldBill('${bill.key}')" style="background: var(--primary-light); color: var(--primary); border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; margin-right: 5px;">🖨️ พิมพ์</button>
-                                <button onclick="deleteBill('${bill.key}', '${bill.billNo}')" style="background: #fee2e2; color: var(--danger); border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">🗑️ ลบ</button>
-                            </div>
-                        </div>
-                        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">${bill.items.map(i => {
-                            return `${i.name}[${i.weightString}=${i.weight}]`;
-                        }).join(', ')}</div>
-                        <div class="history-item-total">${bill.total.toLocaleString(undefined, {minimumFractionDigits:2})} ฿</div>
-                    </div>`).join('');
+                box.style.display = 'none';
+                setActiveInput('weightInput');
             }
+        }
+
+        function saveNewPrice() {
+            let expr = document.getElementById('newPriceInput').value;
+            let newP = evaluateExpression(expr);
+            if (newP > 0) {
+                activeProduct.price = newP;
+                document.getElementById('displayPriceText').innerText = newP.toFixed(2) + ' ฿/กก.';
+                document.getElementById('priceEditBox').style.display = 'none';
+                setActiveInput('weightInput');
+                renderProducts(); 
+            } else {
+                alert('กรุณาระบุราคาให้ถูกต้อง');
+            }
+        }
+
+        function setActiveInput(id) {
+            activeInputId = id;
+            document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active'));
+            if(id) document.getElementById(id).classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+
+        function confirmAddItem() {
+            let expr = document.getElementById('weightInput').value.trim();
+            if (!expr) return alert('กรุณาระบุจำนวน');
             
-            document.getElementById('totalBillsCount').innerText = currentBills.length; 
-            document.getElementById('totalDayAmount').innerText = totalDayAmount.toLocaleString(undefined, {minimumFractionDigits:2}); 
-            document.getElementById('sumLonNa').innerText = sumNa.toFixed(1); 
-            document.getElementById('sumLonTham').innerText = sumTham.toFixed(1); 
-            document.getElementById('sumLonBang').innerText = sumBang.toFixed(1); 
-            document.getElementById('sumCopper').innerText = sumCopper.toFixed(1); 
-            document.getElementById('sumBrass').innerText = sumBrass.toFixed(1); 
-            document.getElementById('sumStainless').innerText = sumStainless.toFixed(1); 
+            let finalWeight = evaluateExpression(expr);
+            if (finalWeight === 0) return alert('จำนวนไม่ถูกต้อง');
+
+            cart.push({
+                id: Date.now() + Math.random(),
+                productId: activeProduct.id,
+                name: activeProduct.name,
+                category: activeProduct.category,
+                price: activeProduct.price,
+                weight: finalWeight,
+                weightString: expr,
+                total: activeProduct.price * finalWeight
+            });
+
+            closeModal('weightModal');
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartList');
+            list.innerHTML = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.total;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <div class="cart-item-info">
+                        <b>${item.name}</b>
+                        <small>${item.weightString} x ${item.price.toFixed(2)} ฿</small>
+                        <button class="btn-remove" onclick="removeFromCart(${index})">ลบ</button>
+                    </div>
+                    <div class="cart-item-price">
+                        <b>${item.total.toFixed(2)}</b>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+
+            document.getElementById('grandTotal').innerText = total.toFixed(2);
+            document.getElementById('mobileCartCount').innerText = `${cart.length} รายการ`;
+            document.getElementById('mobileCartTotal').innerText = total.toFixed(2);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleMobileCart() {
+            if (window.innerWidth <= 900) {
+                document.getElementById('rightPanel').classList.toggle('show');
+            }
+        }
+
+        function processCheckout(printOnly) {
+            if (cart.length === 0) return alert('ไม่มีรายการในตะกร้า');
+            
+            const total = cart.reduce((sum, item) => sum + item.total, 0);
+            const billData = {
+                timestamp: Date.now(),
+                dateStr: new Date().toLocaleDateString('th-TH'),
+                items: cart,
+                total: total
+            };
+
+            if (!printOnly) {
+                db.ref('bills').push(billData).then(() => {
+                    generatePrintSlip(billData);
+                    cart = [];
+                    updateCartUI();
+                    if (window.innerWidth <= 900) toggleMobileCart();
+                }).catch(error => {
+                    console.error("Error saving bill:", error);
+                    alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+                });
+            } else {
+                generatePrintSlip(billData);
+            }
+        }
+
+        function loadHistory() {
+            db.ref('bills').on('value', snapshot => {
+                globalBills = [];
+                snapshot.forEach(child => {
+                    globalBills.push({ key: child.key, ...child.val() });
+                });
+                globalBills.sort((a, b) => b.timestamp - a.timestamp);
+                renderHistoryUI();
+            });
         }
 
         function openHistory() {
-            const dateInput = document.getElementById('filterDate');
-            if(!dateInput.value) {
-                const d = new Date();
-                const yyyy = d.getFullYear();
-                const mm = String(d.getMonth() + 1).padStart(2, '0');
-                const dd = String(d.getDate()).padStart(2, '0');
-                dateInput.value = `${yyyy}-${mm}-${dd}`;
-            }
-            renderHistoryUI();
             document.getElementById('historyModal').style.display = 'flex';
+            renderHistoryUI();
         }
 
-        function deleteBill(key, billNo) {
-            if(confirm(`คุณแน่ใจหรือไม่ที่จะลบบิลเลขที่ ${billNo} ?\n(ข้อมูลนี้จะถูกลบออกจากคลาวด์ถาวร)`)) {
-                db.ref('pos_bills/' + key).remove();
+        function renderHistoryUI() {
+            const list = document.getElementById('historyList');
+            list.innerHTML = '';
+            const filterDateStr = document.getElementById('filterDate').value;
+            
+            let filteredBills = globalBills;
+            if (filterDateStr) {
+                const dateObj = new Date(filterDateStr);
+                const thaiDateStr = dateObj.toLocaleDateString('th-TH');
+                filteredBills = globalBills.filter(b => b.dateStr === thaiDateStr);
             }
+
+            let totalAmount = 0;
+            let sumLonNa = 0, sumLonTham = 0, sumLonBang = 0;
+            let sumCopper = 0, sumBrass = 0, sumStainless = 0;
+
+            filteredBills.forEach(bill => {
+                totalAmount += bill.total;
+                
+                let itemsHtml = '';
+                if (bill.items) {
+                    bill.items.forEach(item => {
+                        itemsHtml += `<div style="display:flex; justify-content:space-between; font-size:13px; color:#475569; margin-bottom:4px; padding-left:10px;">
+                            <span>- ${item.name} (${item.weightString})</span>
+                            <span>${item.total.toFixed(2)}</span>
+                        </div>`;
+                        
+                        let w = Number(item.weight) || 0;
+                        if (item.name.includes("ล.หนา")) sumLonNa += w;
+                        if (item.name.includes("ล.ธรรมดา")) sumLonTham += w;
+                        if (item.name.includes("ล.บาง")) sumLonBang += w;
+                        if (item.name.includes("ทองแดง")) sumCopper += w;
+                        if (item.name.includes("ทองเหลือง")) sumBrass += w;
+                        if (item.name.includes("เลส")) sumStainless += w;
+                    });
+                }
+
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.innerHTML = `
+                    <div class="history-item-header">
+                        <span>${new Date(bill.timestamp).toLocaleString('th-TH')}</span>
+                        <button onclick="deleteBill('${bill.key}')" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:16px;">🗑️</button>
+                    </div>
+                    ${itemsHtml}
+                    <div class="history-item-total">รวม: ${bill.total.toFixed(2)} ฿</div>
+                `;
+                list.appendChild(div);
+            });
+
+            document.getElementById('totalBillsCount').innerText = filteredBills.length;
+            document.getElementById('totalDayAmount').innerText = totalAmount.toLocaleString('th-TH', {minimumFractionDigits: 2});
+            
+            document.getElementById('sumLonNa').innerText = sumLonNa.toFixed(1);
+            document.getElementById('sumLonTham').innerText = sumLonTham.toFixed(1);
+            document.getElementById('sumLonBang').innerText = sumLonBang.toFixed(1);
+            document.getElementById('sumCopper').innerText = sumCopper.toFixed(1);
+            document.getElementById('sumBrass').innerText = sumBrass.toFixed(1);
+            document.getElementById('sumStainless').innerText = sumStainless.toFixed(1);
         }
 
-        function printSummary() {
-            const currentBills = getFilteredBills();
-            if (currentBills.length === 0) return alert('ไม่มีรายการให้สรุปครับ');
-            
-            const filterDate = document.getElementById('filterDate').value;
-            const printTitleDate = filterDate ? `ประจำวันที่: ${filterDate}` : `รวมทุกวันทั้งหมด`;
-            
-            const totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0); 
-            const currentDate = new Date().toLocaleString('th-TH'); 
-            let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
-            
-            currentBills.forEach(bill => { bill.items.forEach(item => { if (item.name === "ล.หนา") sumNa += item.weight; if (item.name === "ล.ธรรมดา") sumTham += item.weight; if (item.name === "ล.บาง") sumBang += item.weight; if (item.category === "ทองแดง") sumCopper += item.weight; if (item.category === "ทองเหลือง") sumBrass += item.weight; if (item.category === "เลส") sumStainless += item.weight; }); });
-            
-            document.getElementById('printArea').innerHTML = `<div class="slip-header"><h3>สรุปยอด (Z-Report)</h3><p>${printTitleDate}</p><p>เวลาพิมพ์: ${currentDate}</p></div><hr class="slip-divider"><table class="slip-table" style="font-size: 14px;"><tr><td style="padding: 10px 0;">จำนวนบิลรับซื้อ:</td><td class="text-right" style="font-weight:bold;">${currentBills.length} บิล</td></tr><tr><td style="padding: 10px 0;">ยอดจ่ายรวมทั้งสิ้น:</td><td class="text-right" style="font-weight:bold; font-size: 16px;">${totalDayAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</td></tr></table><hr class="slip-divider"><div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">📊 สรุปน้ำหนักรับซื้อสุทธิ (กก.)</div><table class="slip-table" style="font-size: 13px;"><tr><td style="padding: 4px 0;">- ล.หนา</td><td class="text-right" style="font-weight:bold;">${sumNa.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">- ล.ธรรมดา</td><td class="text-right" style="font-weight:bold;">${sumTham.toFixed(1)}</td></tr><tr><td style="padding: 4px 0; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">- ล.บาง</td><td class="text-right" style="font-weight:bold; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">${sumBang.toFixed(1)}</td></tr><tr><td style="padding: 8px 0 4px 0;">🔥 ทองแดงรวม</td><td class="text-right" style="font-weight:bold; padding-top: 8px;">${sumCopper.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">✨ ทองเหลืองรวม</td><td class="text-right" style="font-weight:bold;">${sumBrass.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">⚙️ เลสรวม</td><td class="text-right" style="font-weight:bold;">${sumStainless.toFixed(1)}</td></tr></table><hr class="slip-divider"><div style="text-align: center; margin-top: 40px; font-size: 12px;">ผู้ตรวจนับเงิน........................................</div>`;
-            window.print();
-        }
-
-        function exportToCSV() {
-            const currentBills = getFilteredBills();
-            if (currentBills.length === 0) return alert('ไม่มีรายการให้ส่งออกครับ');
-            
-            let csvContent = "เลขที่บิล,วันที่-เวลา,หมวดหมู่,รายการสินค้า,ราคา/หน่วย,สมการน้ำหนัก,น้ำหนักสุทธิ,รวมเงิน(รายการ),ยอดรวมสุทธิทั้งบิล(บาท)\n";
-            currentBills.forEach(bill => { let isFirstItem = true; bill.items.forEach(item => { let row = [ bill.billNo, `"${bill.date}"`, item.category, item.name, item.price, `"${item.weightString}"`, item.weight, item.total, isFirstItem ? bill.total : "" ]; csvContent += row.join(",") + "\n"; isFirstItem = false; }); });
-            const BOM = "\uFEFF"; const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); const url = URL.createObjectURL(blob);
-            const today = new Date(); const dateStr = `${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`;
-            link.setAttribute("href", url); link.setAttribute("download", `รายงานรับซื้อ_${dateStr}.csv`); link.style.visibility = 'hidden'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
-        }
-
-        function clearHistory() { 
-            const filterDate = document.getElementById('filterDate') ? document.getElementById('filterDate').value : '';
-            const msg = filterDate ? `คุณต้องการล้างประวัติบิลของวันที่เลือก (${filterDate}) ใช่หรือไม่?\n(ข้อมูลจะถูกลบถาวร)` : `⚠️ คำเตือน: คุณกำลังเลือกล้างประวัติบิล **ทั้งหมดทุกวัน** ใช่หรือไม่?\n(ข้อมูลจะหายไปทั้งหมด!)`;
-            
-            if(confirm(msg)) { 
-                const currentBills = getFilteredBills();
-                currentBills.forEach(bill => {
-                    db.ref('pos_bills/' + bill.key).remove();
-                });
-            } 
+        function deleteBill(key) {
+            if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบิลนี้? (ข้อมูลจะหายไปจากฐานข้อมูลเลย)')) {
+                db.ref('bills/' + key).remove();
+            }
         }
         
-        init();
-    
         function openCustomModal() {
             document.getElementById('customName').value = '';
             document.getElementById('customPrice').value = '';
@@ -847,6 +614,102 @@
             updateCartUI();
         }
 
+        function generatePrintSlip(billData) {
+            const printDiv = document.getElementById('printArea');
+            let itemsHtml = '';
+            
+            billData.items.forEach(item => {
+                itemsHtml += `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td class="text-right">${item.weight}</td>
+                        <td class="text-right">${item.price.toFixed(2)}</td>
+                        <td class="text-right">${item.total.toFixed(2)}</td>
+                    </tr>
+                `;
+            });
+
+            printDiv.innerHTML = `
+                <div class="slip-header">
+                    <h3>ร้าน POP ค้าของเก่า (สาขา 2)</h3>
+                    <p>โทร. 0XX-XXX-XXXX</p>
+                    <p>วันที่: ${new Date(billData.timestamp).toLocaleString('th-TH')}</p>
+                </div>
+                <div class="slip-divider"></div>
+                <table class="slip-table">
+                    <thead>
+                        <tr>
+                            <th>รายการ</th>
+                            <th class="text-right">นน.</th>
+                            <th class="text-right">ราคา</th>
+                            <th class="text-right">รวม</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${itemsHtml}
+                    </tbody>
+                </table>
+                <div class="slip-divider"></div>
+                <div class="slip-total">
+                    รวมทั้งสิ้น: ${billData.total.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท
+                </div>
+                <p style="text-align: center; font-size: 10px; margin-top: 15px;">ขอบคุณที่ใช้บริการครับ</p>
+            `;
+            window.print();
+        }
+
+        function exportToCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
+            csvContent += "วันที่,รายการ,น้ำหนัก,ราคา/หน่วย,รวม\n";
+            
+            const filterDateStr = document.getElementById('filterDate').value;
+            let filteredBills = globalBills;
+            if (filterDateStr) {
+                const dateObj = new Date(filterDateStr);
+                const thaiDateStr = dateObj.toLocaleDateString('th-TH');
+                filteredBills = globalBills.filter(b => b.dateStr === thaiDateStr);
+            }
+
+            filteredBills.forEach(bill => {
+                let date = new Date(bill.timestamp).toLocaleString('th-TH');
+                if (bill.items) {
+                    bill.items.forEach(item => {
+                        csvContent += `${date},${item.name},${item.weightString},${item.price},${item.total}\n`;
+                    });
+                }
+            });
+            
+            var encodedUri = encodeURI(csvContent);
+            var link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "summary_report.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function clearHistory() {
+            if (confirm('⚠️ คุณแน่ใจหรือไม่ว่าต้องการล้างข้อมูลประวัติ ที่กำลังแสดงอยู่นี้ ทั้งหมด? (ลบแล้วกู้คืนไม่ได้)')) {
+                const filterDateStr = document.getElementById('filterDate').value;
+                let filteredBills = globalBills;
+                if (filterDateStr) {
+                    const dateObj = new Date(filterDateStr);
+                    const thaiDateStr = dateObj.toLocaleDateString('th-TH');
+                    filteredBills = globalBills.filter(b => b.dateStr === thaiDateStr);
+                }
+                
+                filteredBills.forEach(bill => {
+                    db.ref('bills/' + bill.key).remove();
+                });
+                alert('ดำเนินการลบข้อมูลเรียบร้อยแล้ว');
+            }
+        }
+
+        function printSummary() {
+            window.print();
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
