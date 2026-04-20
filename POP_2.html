@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>(ร้านPOPค้าของเก่า)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js">
+        function openCustomModal() {
+            document.getElementById('customName').value = '';
+            document.getElementById('customPrice').value = '';
+            document.getElementById('customWeight').value = '';
+            setActiveInput('customPrice'); 
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function confirmAddCustom() {
+            let name = document.getElementById('customName').value.trim();
+            if (!name) name = 'รายการอื่นๆ';
+
+            let priceExpr = document.getElementById('customPrice').value.trim();
+            let price = evaluateExpression(priceExpr);
+            if (price <= 0) return alert('กรุณาระบุราคาให้ถูกต้อง (มากกว่า 0)');
+
+            let weightExpr = document.getElementById('customWeight').value.trim();
+            let weight = evaluateExpression(weightExpr);
+            if (weight === 0) return alert('กรุณาระบุจำนวนหรือน้ำหนักให้ถูกต้อง');
+
+            cart.push({
+                id: Date.now() + Math.random(),
+                productId: 'custom-' + Date.now(),
+                name: name,
+                category: "อื่นๆ",
+                price: price,
+                weight: weight,
+                weightString: weightExpr,
+                total: price * weight
+            });
+
+            closeModal('customModal');
+            updateCartUI();
+        }
+
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js">
+        function openCustomModal() {
+            document.getElementById('customName').value = '';
+            document.getElementById('customPrice').value = '';
+            document.getElementById('customWeight').value = '';
+            setActiveInput('customPrice'); 
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function confirmAddCustom() {
+            let name = document.getElementById('customName').value.trim();
+            if (!name) name = 'รายการอื่นๆ';
+
+            let priceExpr = document.getElementById('customPrice').value.trim();
+            let price = evaluateExpression(priceExpr);
+            if (price <= 0) return alert('กรุณาระบุราคาให้ถูกต้อง (มากกว่า 0)');
+
+            let weightExpr = document.getElementById('customWeight').value.trim();
+            let weight = evaluateExpression(weightExpr);
+            if (weight === 0) return alert('กรุณาระบุจำนวนหรือน้ำหนักให้ถูกต้อง');
+
+            cart.push({
+                id: Date.now() + Math.random(),
+                productId: 'custom-' + Date.now(),
+                name: name,
+                category: "อื่นๆ",
+                price: price,
+                weight: weight,
+                weightString: weightExpr,
+                total: price * weight
+            });
+
+            closeModal('customModal');
+            updateCartUI();
+        }
+
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js">
+        function openCustomModal() {
+            document.getElementById('customName').value = '';
+            document.getElementById('customPrice').value = '';
+            document.getElementById('customWeight').value = '';
+            setActiveInput('customPrice'); 
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function confirmAddCustom() {
+            let name = document.getElementById('customName').value.trim();
+            if (!name) name = 'รายการอื่นๆ';
+
+            let priceExpr = document.getElementById('customPrice').value.trim();
+            let price = evaluateExpression(priceExpr);
+            if (price <= 0) return alert('กรุณาระบุราคาให้ถูกต้อง (มากกว่า 0)');
+
+            let weightExpr = document.getElementById('customWeight').value.trim();
+            let weight = evaluateExpression(weightExpr);
+            if (weight === 0) return alert('กรุณาระบุจำนวนหรือน้ำหนักให้ถูกต้อง');
+
+            cart.push({
+                id: Date.now() + Math.random(),
+                productId: 'custom-' + Date.now(),
+                name: name,
+                category: "อื่นๆ",
+                price: price,
+                weight: weight,
+                weightString: weightExpr,
+                total: price * weight
+            });
+
+            closeModal('customModal');
+            updateCartUI();
+        }
+
+    </script>
+
+    <style>
+        :root { --primary: #2563eb; --primary-light: #eff6ff; --success: #10b981; --warning: #f59e0b; --danger: #ef4444; --dark: #1e293b; --bg: #f1f5f9; --card: #ffffff; --border: #e2e8f0; --text-main: #334155; --text-muted: #64748b; }
+        * { box-sizing: border-box; font-family: 'Prompt', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg); display: flex; height: 100vh; height: 100dvh; overflow: hidden; color: var(--text-main); user-select: none; }
+        .left-panel { flex: 6.5; display: flex; flex-direction: column; padding: 20px; background: var(--bg); height: 100%; }
+        .right-panel { flex: 3.5; min-width: 330px; display: flex; flex-direction: column; background: var(--card); box-shadow: -10px 0 30px rgba(0,0,0,0.03); z-index: 10; border-top-left-radius: 30px; border-bottom-left-radius: 30px; padding: 20px; height: 100%; }
+        
+        .category-container { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 15px; margin-bottom: 10px; scrollbar-width: none; flex-shrink: 0; }
+        .category-container::-webkit-scrollbar { display: none; }
+        .cat-btn { padding: 10px 20px; border: 2px solid transparent; border-radius: 30px; background: var(--card); color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); font-size: 15px; font-weight: 500; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
+        .cat-btn.active { background: var(--primary); color: white; font-weight: 600; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); transform: translateY(-2px);}
+        
+        .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; overflow-y: auto; padding-bottom: 30px; padding-top: 5px; align-content: start; }
+        .items-grid::-webkit-scrollbar { display: none; }
+        .item-card { background: var(--card); border-radius: 16px; overflow: hidden; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03); border: 2px solid transparent; position: relative;}
+        .item-card:active { transform: scale(0.96); }
+        .item-img { width: 100%; height: 100px; object-fit: cover; background-color: #f8fafc; }
+        .item-info { padding: 10px; text-align: center; }
+        .item-name { font-size: 15px; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px;}
+        .item-price { font-size: 14px; color: var(--success); font-weight: 600; }
+        .category-label { position: absolute; top: 8px; left: 8px; background: rgba(255, 255, 255, 0.85); color: var(--text-main); padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; text-transform: uppercase;}
+        
+        .cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 2px solid var(--border); flex-shrink: 0;}
+        .cart-header h2 { font-size: 18px; color: var(--dark); width: 100%; display: flex; align-items: center; justify-content: space-between;}
+        .btn-history { background: var(--primary-light); color: var(--primary); border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-size: 13px; font-weight: 600;}
+        .cart-list { flex: 1; overflow-y: auto; margin-bottom: 15px; padding-right: 5px;}
+        .cart-list::-webkit-scrollbar { width: 4px; }
+        .cart-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; background: var(--bg); border-radius: 12px; margin-bottom: 8px;}
+        .cart-item-info b { font-size: 15px; color: var(--dark); }
+        .cart-item-info small { color: var(--text-muted); font-size: 13px; display: block; margin-top: 2px;}
+        .cart-item-price { text-align: right; }
+        .cart-item-price b { color: var(--primary); font-size: 16px; }
+        .btn-remove { background: #fee2e2; color: var(--danger); border: none; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; margin-top: 6px; cursor: pointer; z-index: 10;}
+        
+        .total-area { background: var(--dark); padding: 16px 20px; border-radius: 16px; text-align: right; color: white; flex-shrink: 0;}
+        .total-label { font-size: 14px; color: #94a3b8; margin-bottom: 2px;}
+        .total-value { font-size: 32px; font-weight: 700; line-height: 1; }
+        .action-buttons { display: flex; gap: 10px; margin-top: 15px; }
+        .btn-checkout { flex: 1; padding: 12px; background: var(--success); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);}
+        .btn-print-only { flex: 1; padding: 12px; background: white; color: var(--dark); border: 2px solid white; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 300; }
+        .modal-content { background: white; padding: 24px; border-radius: 20px; width: 90%; max-width: 420px; max-height: 95vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); }
+        .modal-content::-webkit-scrollbar { display: none; }
+        .modal-input { width: 100%; padding: 12px; font-size: 24px; text-align: center; border: 2px solid var(--border); border-radius: 12px; margin-bottom: 15px; color: var(--dark); font-weight: 600; background: #f8fafc; cursor: pointer;}
+        .modal-input.active { border-color: var(--primary); background: #fff; }
+        .btn-modal { padding: 14px; border-radius: 12px; border: none; cursor: pointer; font-weight: 600; font-size: 15px; flex: 1; }
+        .modal-actions { display: flex; gap: 10px; margin-top: 15px;}
+        
+        .numpad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
+        .num-btn { background: white; border: 2px solid var(--border); border-radius: 12px; padding: 12px; font-size: 22px; font-weight: 600; color: var(--dark); cursor: pointer; transition: all 0.1s; box-shadow: 0 2px 0 var(--border);}
+        .num-btn:active { transform: translateY(2px); box-shadow: 0 0 0 var(--border); background: var(--bg);}
+        .num-btn.btn-del { background: #fee2e2; color: var(--danger); border-color: #fca5a5; box-shadow: 0 2px 0 #fca5a5; font-size: 20px;}
+        .num-btn.btn-op { color: var(--primary); font-size: 24px; background: var(--primary-light); border-color: #bfdbfe; box-shadow: 0 2px 0 #bfdbfe;}
+        .num-btn.btn-eq { background: var(--success); color: white; border-color: #059669; box-shadow: 0 2px 0 #059669;}
+        
+        .history-item { background: var(--card); padding: 12px; border-radius: 12px; margin-bottom: 10px; border-left: 5px solid var(--primary); box-shadow: 0 2px 4px rgba(0,0,0,0.02); border: 1px solid var(--border);}
+        .history-item-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-muted); margin-bottom: 6px; }
+        .history-item-total { font-weight: 700; color: var(--dark); font-size: 16px; margin-top: 6px; text-align: right;}
+        .summary-box { background: var(--primary-light); padding: 16px; border-radius: 14px; margin-bottom: 12px; text-align: center; }
+        .summary-label { font-size: 14px; color: var(--primary); font-weight: 500;}
+        .summary-total { font-size: 32px; font-weight: 700; color: var(--primary); margin-top: 5px;}
+        .weight-summary-box { background: var(--bg); padding: 12px 16px; border-radius: 12px; margin-bottom: 15px; font-size: 14px; border: 1px solid var(--border);}
+        
+        /* แก้ไขแถบตะกร้ามือถือให้ซ่อนเฉพาะในจอคอม */
+        .mobile-cart-bar { display: none; }
+        
+        @media (max-width: 900px) { 
+            body { display: block; overflow-y: auto; } 
+            .left-panel { width: 100%; min-height: 100vh; padding: 15px; padding-top: 20px; } 
+            .items-grid { padding-bottom: 100px; overflow-y: visible; } 
+            .right-panel { position: fixed; top: 100vh; left: 0; width: 100%; height: 100dvh; border-radius: 0; padding: 20px; box-shadow: 0 -10px 40px rgba(0,0,0,0.15); transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 200; padding-bottom: env(safe-area-inset-bottom, 20px); } 
+            .right-panel.show { top: 0; } 
+            
+            /* แถบตะกร้าในมือถือจะแสดงตลอดเวลา */
+            .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 20px; left: 5%; width: 90%; background: var(--dark); color: white; padding: 14px 24px; border-radius: 100px; box-shadow: 0 10px 25px rgba(30, 41, 59, 0.4); z-index: 150; cursor: pointer; transition: transform 0.2s; }
+            .mobile-cart-bar:active { transform: scale(0.97); }
+            .close-cart-btn { display: inline-block; background: #f1f5f9; color: var(--text-main); border: none; padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 14px; margin-left: auto; cursor: pointer; }
+        }
+        
+        #printArea { display: none; }
+        @media print { body * { visibility: hidden; } #printArea, #printArea * { visibility: visible; } #printArea { display: block; position: absolute; left: 0; top: 0; width: 100%; max-width: 80mm; padding: 10px; font-family: 'Prompt', monospace; color: #000; } .slip-header { text-align: center; margin-bottom: 10px; } .slip-header h3 { margin: 0; font-size: 18px; } .slip-header p { margin: 0; font-size: 12px; } .slip-divider { border-top: 1px dashed #000; margin: 10px 0; border-bottom: none;} .slip-table { width: 100%; font-size: 12px; border-collapse: collapse; } .slip-table th, .slip-table td { padding: 4px 0; } .slip-table th { text-align: left; border-bottom: 1px solid #000; } .slip-table .text-right { text-align: right; } .slip-total { font-size: 16px; font-weight: bold; text-align: right; margin-top: 10px; } }
+    </style>
+</head>
+<body>
+
+    <div class="left-panel">
+        <div class="category-container" id="categoryList"></div>
+        <div class="items-grid" id="itemsGrid"></div>
+    </div>
+
+    <div class="right-panel" id="rightPanel">
+        <div class="cart-header">
+            <h2 style="margin: 0;">🧾 รายการปัจจุบัน <button class="close-cart-btn" onclick="toggleMobileCart()">✖ ปิดหน้าต่าง</button></h2>
+            <div style="display: flex; gap: 8px;">
+                <button class="btn-history" onclick="openCustomModal()" style="background: var(--warning); color: white;">➕ อื่นๆ</button>
+                <button class="btn-history" onclick="openHistory()">📜 ประวัติ</button>
+            </div>
+        </div>
+        <div class="cart-list" id="cartList"></div>
+        <div class="total-area">
+            <div class="total-label">ยอดที่ต้องจ่ายทั้งหมด</div>
+            <div class="total-value"><span id="grandTotal">0.00</span> ฿</div>
+            <div class="action-buttons">
+                <button class="btn-checkout" onclick="processCheckout(false)">💾 บันทึกบิล</button>
+                <button class="btn-print-only" onclick="processCheckout(true)">🖨️ พิมพ์บิล</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-cart-bar" onclick="toggleMobileCart()">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <div style="background: rgba(255,255,255,0.15); padding: 8px 12px; border-radius: 50px;"><span style="font-size: 20px;">🛒</span></div>
+            <div style="display: flex; flex-direction: column;"><span style="font-size: 12px; color: #cbd5e1;">ตะกร้าปัจจุบัน</span><span style="font-weight: 600; font-size: 15px;" id="mobileCartCount">0 รายการ</span></div>
+        </div>
+        <div style="text-align: right;"><span style="font-size: 12px; color: #cbd5e1;">ยอดรวม (฿)</span><div style="font-weight: 700; font-size: 18px; color: #34d399;" id="mobileCartTotal">0.00</div></div>
+    </div>
+
+    <div class="modal-overlay" id="weightModal">
+        <div class="modal-content" style="text-align: center;">
+            <h2 id="modalItemName" style="margin-bottom: 8px; color: var(--dark); font-size: 22px;">ชื่อสินค้า</h2>
+            <div style="margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                <span id="displayPriceText" style="color: var(--primary); font-size: 16px; font-weight: 600; background: var(--primary-light); padding: 4px 12px; border-radius: 16px;">0.00 ฿/กก.</span>
+                <button onclick="toggleEditPrice()" style="background: white; border: 2px solid var(--warning); color: var(--warning); padding: 4px 10px; border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 13px;">✏️ แก้ไข</button>
+            </div>
+            
+            <div id="priceEditBox" style="background: #fffbeb; padding: 16px; border-radius: 12px; border: 2px solid #fde68a; margin-bottom: 15px; display: none;">
+                <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">ระบุราคาใหม่ (บาท/หน่วย)</label>
+                <input type="text" id="newPriceInput" class="modal-input" readonly onclick="setActiveInput('newPriceInput')">
+                <button class="btn-modal" style="background: var(--warning); color: white; width: 100%;" onclick="saveNewPrice()">อัปเดตราคา</button>
+            </div>
+            
+            <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500;">น้ำหนัก (บวกลบเลข หรือใส่ติดลบได้เลย เช่น -3)</label>
+            <input type="text" id="weightInput" class="modal-input active" placeholder="0" readonly onclick="setActiveInput('weightInput')">
+            
+            <div class="numpad">
+                <button class="num-btn" onclick="numPress('7')">7</button>
+                <button class="num-btn" onclick="numPress('8')">8</button>
+                <button class="num-btn" onclick="numPress('9')">9</button>
+                <button class="num-btn btn-op" onclick="numPress('+')">+</button>
+                
+                <button class="num-btn" onclick="numPress('4')">4</button>
+                <button class="num-btn" onclick="numPress('5')">5</button>
+                <button class="num-btn" onclick="numPress('6')">6</button>
+                <button class="num-btn btn-op" style="color: var(--danger); background: #fee2e2; border-color: #fca5a5; box-shadow: 0 2px 0 #fca5a5;" onclick="numPress('-')">-</button>
+                
+                <button class="num-btn" onclick="numPress('1')">1</button>
+                <button class="num-btn" onclick="numPress('2')">2</button>
+                <button class="num-btn" onclick="numPress('3')">3</button>
+                <button class="num-btn btn-del" onclick="numDel()">⌫</button>
+                
+                <button class="num-btn" style="color: var(--danger); font-weight: bold;" onclick="numClear()">C</button>
+                <button class="num-btn" onclick="numPress('0')">0</button>
+                <button class="num-btn" onclick="numPress('.')">.</button>
+                <button class="num-btn btn-eq" onclick="calcMath()">=</button>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-modal" style="background: var(--bg); color: var(--text-main);" onclick="closeModal('weightModal')">ยกเลิก</button>
+                <button class="btn-modal" style="background: var(--primary); color: white;" onclick="confirmAddItem()">บันทึกรายการ</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <!-- Modal สำหรับรายการอื่นๆ กำหนดชื่อและราคาเอง -->
+    <div class="modal-overlay" id="customModal">
+        <div class="modal-content" style="text-align: center;">
+            <h2 style="margin-bottom: 15px; color: var(--dark); font-size: 22px;">➕ เพิ่มรายการอื่นๆ</h2>
+            
+            <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">ชื่อรายการ</label>
+            <input type="text" id="customName" placeholder="เช่น เหล็กพิเศษ, หักค่าบริการ..." style="width: 100%; padding: 12px; font-size: 18px; border: 2px solid var(--border); border-radius: 12px; margin-bottom: 15px; color: var(--dark); font-weight: 600; background: #f8fafc; outline: none; font-family: 'Prompt';" onfocus="activeInputId = null; document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active')); this.style.borderColor = 'var(--primary)'; this.style.background = '#fff';" onblur="this.style.borderColor = 'var(--border)'; this.style.background = '#f8fafc';">
+            
+            <div style="display: flex; gap: 10px;">
+                <div style="flex: 1;">
+                    <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">ราคา (บาท/หน่วย)</label>
+                    <input type="text" id="customPrice" class="modal-input active" placeholder="0" readonly onclick="setActiveInput('customPrice')">
+                </div>
+                <div style="flex: 1;">
+                    <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">จำนวน / น้ำหนัก</label>
+                    <input type="text" id="customWeight" class="modal-input" placeholder="0" readonly onclick="setActiveInput('customWeight')">
+                </div>
+            </div>
+            
+            <div class="numpad">
+                <button class="num-btn" onclick="numPress('7')">7</button>
+                <button class="num-btn" onclick="numPress('8')">8</button>
+                <button class="num-btn" onclick="numPress('9')">9</button>
+                <button class="num-btn btn-op" onclick="numPress('+')">+</button>
+                
+                <button class="num-btn" onclick="numPress('4')">4</button>
+                <button class="num-btn" onclick="numPress('5')">5</button>
+                <button class="num-btn" onclick="numPress('6')">6</button>
+                <button class="num-btn btn-op" style="color: var(--danger); background: #fee2e2; border-color: #fca5a5; box-shadow: 0 2px 0 #fca5a5;" onclick="numPress('-')">-</button>
+                
+                <button class="num-btn" onclick="numPress('1')">1</button>
+                <button class="num-btn" onclick="numPress('2')">2</button>
+                <button class="num-btn" onclick="numPress('3')">3</button>
+                <button class="num-btn btn-del" onclick="numDel()">⌫</button>
+                
+                <button class="num-btn" style="color: var(--danger); font-weight: bold;" onclick="numClear()">C</button>
+                <button class="num-btn" onclick="numPress('0')">0</button>
+                <button class="num-btn" onclick="numPress('.')">.</button>
+                <button class="num-btn btn-eq" onclick="calcMath()">=</button>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="btn-modal" style="background: var(--bg); color: var(--text-main);" onclick="closeModal('customModal')">ยกเลิก</button>
+                <button class="btn-modal" style="background: var(--primary); color: white;" onclick="confirmAddCustom()">บันทึกรายการ</button>
+            </div>
+        </div>
+    </div>
+<div class="modal-overlay" id="historyModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 15px; text-align: center; color: var(--dark); font-size: 20px;">📜 ประวัติ / สรุปยอด</h2>
+            <div style="background: var(--bg); padding: 12px; border-radius: 12px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; justify-content: space-between; border: 1px solid var(--border);">
+                <label style="font-size: 14px; font-weight: 600; color: var(--dark); white-space: nowrap;">เลือกวันที่:</label>
+                <input type="date" id="filterDate" onchange="renderHistoryUI()" style="flex: 1; padding: 8px; border-radius: 8px; border: 1px solid #cbd5e1; font-family: 'Prompt'; font-size: 14px; cursor: pointer;">
+                <button onclick="document.getElementById('filterDate').value=''; renderHistoryUI()" style="background: var(--primary-light); color: var(--primary); border: none; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;">ดูทั้งหมด</button>
+            </div>
+            <div class="summary-box">
+                <div class="summary-label">ยอดจ่ายรวมที่เลือก (<span id="totalBillsCount">0</span> บิล)</div>
+                <div class="summary-total"><span id="totalDayAmount">0.00</span> ฿</div>
+            </div>
+            <div class="weight-summary-box">
+                <strong style="display:block; margin-bottom: 10px; color: var(--dark); font-size: 15px; text-align: center;">📊 สรุปน้ำหนักรับซื้อสุทธิ (กิโลกรัม)</strong>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: var(--text-main);"><span>- ล.หนา:</span><strong id="sumLonNa">0.0</strong></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: var(--text-main);"><span>- ล.ธรรมดา:</span><strong id="sumLonTham">0.0</strong></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; color: var(--text-main);"><span>- ล.บาง:</span><strong id="sumLonBang">0.0</strong></div>
+                <hr style="border: 0; border-top: 1px dashed var(--border); margin: 8px 0;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #b45309;"><span>🔥 ทองแดงรวม:</span><strong id="sumCopper">0.0</strong></div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #a16207;"><span>✨ ทองเหลืองรวม:</span><strong id="sumBrass">0.0</strong></div>
+                <div style="display: flex; justify-content: space-between; color: #334155;"><span>⚙️ เลสรวม:</span><strong id="sumStainless">0.0</strong></div>
+            </div>
+            <div id="historyList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px; background: #f8fafc; border-radius: 12px; padding: 10px;"></div>
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="btn-modal" style="background: var(--dark); color: white; flex: 1;" onclick="printSummary()">🖨️ พิมพ์สรุป</button>
+                <button class="btn-modal" style="background: #10b981; color: white; flex: 1;" onclick="exportToCSV()">📊 โหลด Excel</button>
+            </div>
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="btn-modal" style="background: #fee2e2; color: var(--danger); flex: 1;" onclick="clearHistory()">🗑️ ล้างประวัติ (ที่กำลังแสดงอยู่)</button>
+            </div>
+            <button class="btn-modal" style="background: var(--bg); color: var(--text-main); width: 100%;" onclick="closeModal('historyModal')">ปิดหน้าต่าง</button>
+        </div>
+    </div>
+
+    <div id="printArea"></div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCxFoL6fkV8Vy900VsbRNWEs642gXuG_AE",
+            authDomain: "pop2-e301c.firebaseapp.com",
+            databaseURL: "https://pop2-e301c-default-rtdb.firebaseio.com",
+            projectId: "pop2-e301c",
+            storageBucket: "pop2-e301c.firebasestorage.app",
+            messagingSenderId: "186999001428",
+            appId: "1:186999001428:web:2f62fff60937f20b1fb8c1",
+            measurementId: "G-98WRWGXH8K"
+        };
+        firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig); firebase.analytics(); const db = firebase.database();
+        let globalBills = [];
+
+        let products = [
+            { id: 1, name: "ล.หนา", category: "เหล็ก", price: 10.7, img: "https://static.wixstatic.com/media/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg" },
+            { id: 2, name: "ล.ธรรมดา", category: "เหล็ก", price: 10.3, img: "https://static.wixstatic.com/media/fbf885_a1368c183d92470dbe7a575fa82d0350~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_a1368c183d92470dbe7a575fa82d0350~mv2.jpg" },
+            { id: 3, name: "ล.บาง", category: "เหล็ก", price: 9.0, img: "https://static.wixstatic.com/media/fbf885_fe981796d4d8463a88085fc3e56c1ec5~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_fe981796d4d8463a88085fc3e56c1ec5~mv2.jpg" },
+            { id: 4, name: "ดาษ", category: "ดาษ", price: 2.8, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQC-tnjgxDRrcey6DMLA12pHu7lEzYhptQqjw&s" },
+            { id: 5, name: "เล่ม", category: "ดาษ", price: 1.5, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKQE1VC6eLrjaq_LaUuvjwhblMuidKQ5OQbQ&s" },
+            { id: 6, name: "ขาว-ดำ", category: "ดาษ", price: 4.5, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkfJx3LLRDyYRYKGik7Rya1xBVkJfvMkCPxA&s" },
+            { id: 7, name: "แกน", category: "ดาษ", price: 0.5, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRBILbvlp_eUc23-45-G-E5hPFovphGJ3P1g&s" },
+            { id: 8, name: "ข.แดง", category: "ขวด", price: 1.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtb286Ycz6b2-oPSQyoK7fn0XoYM2IvbmE5A&s" },
+            { id: 9, name: "ข.ขาว", category: "ขวด", price: 1.2, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_wI_JlSfmtEf_5MF4CD-zwswNnxIVFVCe7A&s" },
+            { id: 10, name: "ข.เขียว", category: "ขวด", price: 1.1, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBIdh38sanXDhNbHqCdAt65TcQ1B7gPNo1Dg&s" },
+            { id: 11, name: "ใส", category: "พลาสติก", price: 11.0, img: "https://www.packnco.com/images/content/original-1594181749784.png" },
+            { id: 12, name: "สี", category: "พลาสติก", price: 4.0, img: "https://inwfile.com/s-d/xztvab.jpg" },
+            { id: 13, name: "ดำ", category: "พลาสติก", price: 1.5, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9kWDzMxan8qJNQJsXeWyHbOnD8g_QXuhcLA&s" },
+            { id: 14, name: "กรอบ", category: "พลาสติก", price: 2.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBncwQIP9V8Rru5Gvu9yWbwRkDOc47cY7VDQ&s" },
+            { id: 15, name: "ติกรวม", category: "พลาสติก", price: 6.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0IfVme51rDYNbJQoK9d-vot3EMOw5bWj50A&s" },
+            { id: 16, name: "ถุง PE", category: "พลาสติก", price: 4.0, img: "https://image.makewebcdn.com/makeweb/m_1920x0/vempXb0Oo/Products/UTB8HoMPwo_4iuJk43Fqq6z_FpXan.jpg" },
+            { id: 17, name: "ถุงรวม", category: "พลาสติก", price: 2.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRqjZrU-8pRnqFgumOg85XSaUEqYDGmzPCzsA&s" },
+            { id: 18, name: "PVC (สีฟ้า)", category: "PVC", price: 3.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdcE3fLuxzq-eqq9rLnWpdHZiQMYRU2mmGLQ&s" },
+            { id: 19, name: "PVC (สีเหลือง)", category: "PVC", price: 1.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0J449fdjV4LtXDeph26hqhXY9TmmjuCOKxg&s" },
+            { id: 20, name: "PE ท่อดำ", category: "PVC", price: 2.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4efRGuMA_slTLpkdwRQLQqnz_kWCWAzocwg&s" },
+            { id: 21, name: "สายยาง", category: "PVC", price: 1.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1K7uN2q85mWqzoCTWd4VK3pduhhUJf5i4Qw&s" },
+            { id: 22, name: "เปลือกสาย", category: "PVC", price: 1.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3U6nhNE5zAS4b6eWXlo-_GH-B_ZgL4T_zMA&s" },
+            { id: 23, name: "ป๋องล.", category: "สังกะสี", price: 3.0, img: "https://media.yellowpages.co.th/olc250/4094806/4094806_10.jpg" },
+            { id: 24, name: "สังกะสี", category: "สังกะสี", price: 3.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtz5EzFJaRCamsAp8wjxt9MWG1vnS0REhCWw&s" },
+            { id: 25, name: "ปอก", category: "ทองแดง", price: 360.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9xTbm8kPHiaPR_z4VnpaTgtctV-_OvTi8rw&s" },
+            { id: 26, name: "ช็อต", category: "ทองแดง", price: 350.0, img: "https://image.makewebcdn.com/makeweb/m_1920x0/Bo6IhggdS/Products/S__8372229.jpg?v=202405291424" },
+            { id: 27, name: "ใหญ่", category: "ทองแดง", price: 330.0, img: "https://image.makewebcdn.com/makeweb/m_1920x0/Bo6IhggdS/Products/MILLBERY_NO_1.png?v=202405291424" },
+            { id: 28, name: "เล็ก", category: "ทองแดง", price: 320.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShy7lr8rHiplwRMqiWkVx1ONxbPKiXATVmSQ&s" },
+            { id: 29, name: "เผา", category: "ทองแดง", price: 310.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKavetfTq7yVz6HrrcowTqaX6eaDPON-jwBQ&s" },
+            { id: 30, name: "ชุป", category: "ทองแดง", price: 300.0, img: "https://honestcable.com/wp-content/uploads/2025/10/Bare-vs-Tinned-Copper-Wire.jpg" },
+            { id: 31, name: "เหลือง", category: "ทองเหลือง", price: 190.0, img: "https://www.maxsteelthai.com/wp-content/uploads/2019/08/image621.png" },
+            { id: 32, name: "น.หนา", category: "เนียม", price: 55.0, img: "https://www.guenter.co.th/wp-content/uploads/2022/12/%E0%B8%AD%E0%B8%A5%E0%B8%B9%E0%B8%A1%E0%B8%B4%E0%B9%80%E0%B8%99%E0%B8%B5%E0%B8%A2%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%99-Aluminum-Flat-Bar-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%82%E0%B8%99%E0%B8%B2%E0%B8%94-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B2-%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%80%E0%B8%95%E0%B9%87%E0%B8%A1-%E0%B8%AA%E0%B8%B1%E0%B9%88%E0%B8%87%E0%B8%95%E0%B8%B1%E0%B8%94-Guenter.co_.th_.jpg" },
+            { id: 33, name: "น.บาง", category: "เนียม", price: 55.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-7Vvp9mG0Y-AlRNRCZ-KQk2PUSN3qDzBPvQ&s" },
+            { id: 34, name: "น.ฉาก", category: "เนียม", price: 65.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU94RpXGELZRavoq2Q73QIgSMQ01fNsNvwIw&s" },
+            { id: 35, name: "น.ป๋อง", category: "เนียม", price: 60.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-U7yKzclqv5tN7zqyofPZ-pYf6fQ1_jgQGg&s" },
+            { id: 36, name: "ล้อแม็ก", category: "เนียม", price: 73.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUm5s4riPPOhrHCOqdNHzXw2Ud0mGq9mcUeQ&s" },
+            { id: 37, name: "กะทะ", category: "เนียม", price: 35.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBzAsi1wIibuW3EJdf_od_wa_-1J1Ef91fCA&s" },
+            { id: 38, name: "น.สายไฟ", category: "เนียม", price: 80.0, img: "https://www.recyclenow.in.th/wp-content/uploads/2018/05/alup.jpg" },
+            { id: 39, name: "ฝาแกะ", category: "เนียม", price: 25.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0rF_VD68Cf4EoZKAjgwWYfMu7gS0Hhrkl6A&s" },
+            { id: 40, name: "ฝาไม่แกะ", category: "เนียม", price: 10.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlPZhwvbSz8dRmlDinUF0ufeIMTqG9FI-TVw&s" },
+            { id: 41, name: "มุ้ง", category: "เนียม", price: 20.0, img: "https://img.lazcdn.com/g/p/f1f89c582d163eac0340a714fa79f413.jpg_720x720q80.jpg" },
+            { id: 42, name: "มู่ลี่", category: "เนียม", price: 25.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTniViW1_KkaFkNihQuWfdWfn-m1EF4fQr9uw&s" },
+            { id: 43, name: "น.อัลอย", category: "เนียม", price: 35.0, img: "https://naspaasia.com/wp-content/uploads/2018/08/6061-1-1.png" },
+            { id: 44, name: "หม้อน้ำแดง", category: "หม้อน้ำ", price: 150.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMcFFDViHcMRP7_rXVV_mMAk6F7m-MYUhsKA&s" },
+            { id: 45, name: "หม้อน้ำเหลือง", category: "หม้อน้ำ", price: 170.0, img: "https://i.ytimg.com/vi/aIO-JSftVXE/maxresdefault.jpg" },
+            { id: 46, name: "หม้อน้ำเนียม", category: "หม้อน้ำ", price: 40.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwR54acgP95-vk6OgZ7FrXHtztrlrfeysl7Q&s" },
+            { id: 47, name: "แบตใหญ่", category: "แบต", price: 23.0, img: "https://www.gsbattery.co.th/product/5ffb0082b7521.png" },
+            { id: 48, name: "แบตเล็ก", category: "แบต", price: 20.0, img: "https://www.spabattery.com/uploads/product/1045/1591950160_c5c105cfeebc789f2151f4fead005d54_278.jpeg" },
+            { id: 49, name: "TV BIG", category: "ตู้เย็น", price: 80.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtz5EzFJaRCamsAp8wjxt9MWG1vnS0REhCWw&s" },
+            { id: 50, name: "TV SMALL", category: "ตู้เย็น", price: 50.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_-N7zXvTWTu3T3GJFSekBVPYsqn88Hao_Ng&s" },
+            { id: 51, name: "จอแบน BIG", category: "ตู้เย็น", price: 20.0, img: "https://down-th.img.susercontent.com/file/sg-11134253-7rdy7-mdbac01prlfkfa" },
+            { id: 52, name: "จอแบน SMALL", category: "ตู้เย็น", price: 60.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMKYt_pqPnOuX4fdDR6DLOJNbFUN9fAAFkuw&s" },
+            { id: 53, name: "ตู้เย็นกลาง", category: "ตู้เย็น", price: 200.0, img: "https://filebroker-cdn.lazada.co.th/kf/Sb7ce49db70df4695a45174191480e9e34.jpg" },
+            { id: 54, name: "ตู้เย็นเล็ก", category: "ตู้เย็น", price: 150.0, img: "https://img.th.my-best.com/product_images/63317898d0892066c9f6d538a5e749f6.png?ixlib=rails-4.3.1&q=70&lossless=0&w=800&h=800&fit=clip&s=bc30dcb3b6bf8c66f1c3c96e5ffec5ea" },
+            { id: 55, name: "ตู้เย็นใหญ่", category: "ตู้เย็น", price: 250.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxJXJkPUDzs0sVVdDrJZLrSYEf9ex0w2XCFA&s" },
+            { id: 56, name: "เครื่องซักผ้า A", category: "ตู้เย็น", price: 200.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS9I3Dlv6Nu7cFFqLuW9LjbUBM0bY8AXLmaA&s" },
+            { id: 57, name: "เครื่องซักผ้า B", category: "ตู้เย็น", price: 150.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBZmk0W26cR9sehEOrg1iMi2b-Tav4tTPAMQ&s" },
+            { id: 58, name: "เลส", category: "เลส", price: 28.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr0D3xsZmA2o9q2nqmxVwpdEK11WdOATzfAA&s" },
+            { id: 59, name: "เลสตะกั่ว", category: "เลส", price: 20.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwK-QXxquVFuhTuI9EwZ-0lZNHqArRA74nkg&s" },
+            { id: 60, name: "ถอด น.A", category: "ถอด", price: 25.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
+            { id: 61, name: "ถอด น.B", category: "ถอด", price: 20.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
+            { id: 62, name: "ถอดหม้อ", category: "ถอด", price: 9.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
+            { id: 63, name: "ถอดรวม", category: "ถอด", price: 15.0, img: "https://placehold.co/200x150/f1f5f9/475569?text=ถอด" },
+            { id: 64, name: "ถอดพัดลม", category: "ถอด", price: 5.0, img: "https://f.ptcdn.info/608/029/000/1427041014-NewImage-o.jpg" },
+            { id: 65, name: "มอเตอร์ A", category: "ถอด", price: 25.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqV_cUCmj_PykBMiMtrhAInmdiQmlsH67XTQ&s" },
+            { id: 66, name: "มอเตอร์ B", category: "ถอด", price: 18.0, img: "https://inex.co.th/home/wp-content/uploads/2020/07/dc-motor6v.jpg" },
+            { id: 67, name: "แผงวงจร", category: "ถอด", price: 25.0, img: "https://f.ptcdn.info/829/073/000/quq9dn48mzNELN7Kq4jQ-o.png" },
+            { id: 68, name: "CD", category: "ถอด", price: 7.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRDplJ_vSWLhdVWTXDydm_7G8xFcdcgME2S4w&s" },
+            { id: 69, name: "ลีโอ", category: "ลังเบียร์", price: 8.0, img: "https://down-th.img.susercontent.com/file/94141c21b2204ea7a99d5ffa42167615" },
+            { id: 70, name: "ช้าง", category: "ลังเบียร์", price: 13.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQTWuvUUD5qblCQxpkHOCt6X6aoLi-ve2djw&s" },
+            { id: 71, name: "สิงห์", category: "ลังเบียร์", price: 7.0, img: "https://down-th.img.susercontent.com/file/th-11134207-7rasj-m9lj9x8itwj2ef" },
+            { id: 72, name: "เหล้า(ใหญ่)", category: "ลังเบียร์", price: 10.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrIgqCgSbF1qG4ZAIQplPJf0a0SDsJKp11Gw&s" },
+            { id: 73, name: "เหล้า(เล็ก)", category: "ลังเบียร์", price: 19.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5F4utWDjcVVLX3ywfyKOnX-MRwxd3hOdf3A&s" },
+            { id: 74, name: "หงส์(กลม)", category: "ลังเบียร์", price: 19.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSicsH6MoDmS8Cbue7I3Oof8_uF1CF0YRr_Cg&s" },
+            { id: 75, name: "หงส์(แบน)", category: "ลังเบียร์", price: 10.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjTSuJzzDm-1_XODbJsUHcuHgv_H2NY9bRGg&s" }
+        ];
+
+        let cart = []; let currentItem = null; let activeInputId = 'weightInput';
+
+        function setupFirebaseListeners() {
+            db.ref('pos_custom_prices').on('value', (snapshot) => {
+                const savedPrices = snapshot.val() || {};
+                products.forEach(p => { if (savedPrices[p.id] !== undefined) p.price = savedPrices[p.id]; });
+                const activeCatBtn = document.querySelector('.cat-btn.active'); if(activeCatBtn) renderItems(activeCatBtn.innerText);
+            });
+            db.ref('pos_bills').on('value', (snapshot) => {
+                globalBills = []; snapshot.forEach(child => { globalBills.push({ key: child.key, ...child.val() }); });
+                if(document.getElementById('historyModal').style.display === 'flex') { renderHistoryUI(); }
+            });
+        }
+        
+        function init() { setupFirebaseListeners(); renderCategories(); renderItems('ทั้งหมด'); }
+
+        function renderCategories() {
+            const container = document.getElementById('categoryList');
+            const menuOrder = ['ทั้งหมด', 'เหล็ก', 'พลาสติก', 'ดาษ', 'ขวด', 'ลังเบียร์', 'เนียม', 'สังกะสี', 'ถอด', 'ทองแดง', 'ทองเหลือง', 'เลส', 'PVC', 'หม้อน้ำ', 'แบต', 'ตู้เย็น'];
+            const allCats = [...new Set(products.map(p => p.category))];
+            const finalOrder = menuOrder.filter(c => c === 'ทั้งหมด' || allCats.includes(c));
+            container.innerHTML = finalOrder.map(c => `<button class="cat-btn ${c==='ทั้งหมด'?'active':''}" onclick="filterCat(this, '${c}')">${c}</button>`).join('');
+        }
+
+        function filterCat(btn, cat) { document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderItems(cat); }
+
+        function renderItems(cat) {
+            const grid = document.getElementById('itemsGrid'); let html = '';
+            if (cat === 'ทั้งหมด') {
+                grid.style.display = 'block';
+                const customOrder = ['เหล็ก', 'พลาสติก', 'ดาษ', 'ขวด', 'ลังเบียร์', 'เนียม', 'สังกะสี', 'ถอด', 'ทองแดง', 'ทองเหลือง'];
+                const allAvailableCats = [...new Set(products.map(p => p.category))];
+                const finalDisplayOrder = [...customOrder.filter(c => allAvailableCats.includes(c)), ...allAvailableCats.filter(c => !customOrder.includes(c))];
+                finalDisplayOrder.forEach(c => {
+                    const itemsInCat = products.filter(p => p.category === c);
+                    if (itemsInCat.length > 0) {
+                        html += `<div style="margin-bottom: 25px;"><div style="display: flex; align-items: center; margin-bottom: 12px;"><span style="background: var(--primary); width: 6px; height: 18px; border-radius: 4px; margin-right: 8px;"></span><h3 style="font-size: 15px; font-weight: 600; color: var(--dark); margin: 0;">${c}</h3></div><div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">${itemsInCat.map(p => `<div class="item-card" onclick="openModal(${p.id})" style="flex: 0 0 120px;"><div class="category-label">${c}</div><img src="${p.img}" class="item-img" loading="lazy"><div class="item-info"><div class="item-name">${p.name}</div><div class="item-price">${p.price} ฿</div></div></div>`).join('')}</div></div>`;
+                    }
+                });
+            } else {
+                grid.style.display = 'grid';
+                const filtered = products.filter(p => p.category === cat);
+                html = filtered.map(p => `<div class="item-card" onclick="openModal(${p.id})"><div class="category-label">${cat}</div><img src="${p.img}" class="item-img" loading="lazy"><div class="item-info"><div class="item-name">${p.name}</div><div class="item-price">${p.price} ฿</div></div></div>`).join('');
+            }
+            grid.innerHTML = html;
+        }
+
+        function setActiveInput(id) { activeInputId = id; document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+        
+        function evaluateExpression(expr) {
+            if (!expr) return 0;
+            expr = expr.replace(/[+\-.]+$/, '');
+            if (expr === '') return 0;
+            try {
+                if (/^[0-9+\-.]+$/.test(expr)) {
+                    return Math.round(new Function('return ' + expr)() * 100) / 100;
+                }
+            } catch(e) {}
+            return 0;
+        }
+
+        function numPress(val) { 
+            const input = document.getElementById(activeInputId); 
+            let current = input.value;
+            
+            if (current === '0' && val === '-') { input.value = '-'; return; }
+            if (current === '' && val === '-') { input.value = '-'; return; }
+
+            const lastChar = current.slice(-1);
+            if (['+', '-', '.'].includes(val) && ['+', '-', '.'].includes(lastChar)) {
+                input.value = current.slice(0, -1) + val;
+                return;
+            }
+
+            if (current === '0' && !['.', '+', '-'].includes(val)) {
+                input.value = val; 
+            } else {
+                input.value += val; 
+            }
+        }
+        
+        function numDel() { const input = document.getElementById(activeInputId); input.value = input.value.slice(0, -1); }
+        function numClear() { document.getElementById(activeInputId).value = ''; }
+        function calcMath() {
+            const input = document.getElementById(activeInputId);
+            if(activeInputId === 'weightInput') {
+                const result = evaluateExpression(input.value);
+                if(result !== 0 || input.value === '0') input.value = result;
+            }
+        }
+
+        function openModal(id) {
+            currentItem = products.find(p => p.id === id); 
+            document.getElementById('modalItemName').innerText = currentItem.name; 
+            document.getElementById('priceEditBox').style.display = 'none';
+            updatePriceDisplay(); 
+            
+            document.getElementById('weightInput').value = ''; 
+            document.getElementById('weightModal').style.display = 'flex'; 
+            setActiveInput('weightInput');
+        }
+
+        function updatePriceDisplay() { document.getElementById('displayPriceText').innerText = `${currentItem.price.toFixed(2)} ฿/หน่วย`; document.getElementById('newPriceInput').value = currentItem.price; }
+        function toggleEditPrice() { const box = document.getElementById('priceEditBox'); if (box.style.display === 'none') { box.style.display = 'block'; setActiveInput('newPriceInput'); } else { box.style.display = 'none'; setActiveInput('weightInput'); } }
+        
+        function saveNewPrice() {
+            const newPrice = parseFloat(document.getElementById('newPriceInput').value);
+            if (newPrice >= 0) { currentItem.price = newPrice; updatePriceDisplay(); toggleEditPrice(); db.ref('pos_custom_prices/' + currentItem.id).set(newPrice); }
+        }
+
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+        
+        function confirmAddItem() { 
+            let weightExpr = document.getElementById('weightInput').value.trim();
+            let weight = evaluateExpression(weightExpr);
+            
+            if (weight === 0) return alert('กรุณาระบุน้ำหนักให้ถูกต้อง'); 
+
+            let existingItemIndex = cart.findIndex(i => i.productId === currentItem.id && i.price === currentItem.price);
+
+            if (existingItemIndex !== -1) {
+                let existingItem = cart[existingItemIndex];
+                let newExprPart = weightExpr;
+                if (!newExprPart.startsWith('+') && !newExprPart.startsWith('-')) {
+                    newExprPart = '+' + newExprPart;
+                }
+                existingItem.weightString = existingItem.weightString + newExprPart;
+                existingItem.weight += weight;
+                existingItem.total = existingItem.price * existingItem.weight;
+                
+            } else {
+                cart.push({ 
+                    id: Date.now() + Math.random(), 
+                    productId: currentItem.id,
+                    name: currentItem.name, 
+                    category: currentItem.category, 
+                    price: currentItem.price, 
+                    weight: weight, 
+                    weightString: weightExpr,
+                    total: currentItem.price * weight 
+                }); 
+            }
+            
+            closeModal('weightModal'); 
+            updateCartUI(); 
+        }
+
+        function toggleMobileCart() { document.getElementById('rightPanel').classList.toggle('show'); }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartList'); let total = 0;
+            
+            list.innerHTML = cart.map(item => { 
+                total += item.total; 
+                let priceColor = item.total < 0 ? 'color: var(--danger);' : 'color: var(--primary);';
+                let weightDisplayColor = item.weight === 0 ? 'color: var(--danger);' : 'color: var(--text-muted);';
+
+                return `<div class="cart-item">
+                    <div class="cart-item-info">
+                        <b>${item.name}</b>
+                        <small style="${weightDisplayColor}">${item.weightString} = ${item.weight} กก. x ${item.price} ฿</small>
+                    </div>
+                    <div class="cart-item-price">
+                        <b style="${priceColor}">${item.total.toLocaleString(undefined, {minimumFractionDigits:2})} ฿</b><br>
+                        <button class="btn-remove" onclick="removeCart('${item.id}')">ลบ</button>
+                    </div>
+                </div>`; 
+            }).join('');
+            
+            const formattedTotal = total.toLocaleString(undefined, {minimumFractionDigits:2});
+            document.getElementById('grandTotal').innerText = formattedTotal;
+
+            const mobileCountStr = cart.length > 0 ? `${cart.length} รายการ` : '0 รายการ';
+            document.getElementById('mobileCartCount').innerText = mobileCountStr;
+            document.getElementById('mobileCartTotal').innerText = formattedTotal;
+        }
+
+        function removeCart(cartId) { 
+            cart = cart.filter(i => i.id != cartId); 
+            updateCartUI(); 
+        }
+
+        function renderReceiptHTML(billNo, date, items, totalAmount) {
+            return `<div class="slip-header"><h3 style="margin-bottom: 5px; font-size: 18px;">ร้านPOPค้าของเก่า</h3><p style="font-size: 12px; margin-bottom: 2px;">55/1/1หมู่ 17 ตำบลคลองนครเนื่องเขต</p><p style="font-size: 12px; margin-bottom: 2px;">อำเภอเมือง จังหวัดฉะเชิงเทรา 24000</p><p style="font-size: 12px; margin-bottom: 8px;">เบอร์ติดต่อ: 0897005720</p><p style="font-weight: bold; font-size: 14px;">ใบเสร็จรับเงิน</p><p>วันที่: ${date}</p><p>เลขที่บิล: ${billNo}</p></div>
+            <hr class="slip-divider">
+            <table class="slip-table">
+                <thead><tr><th>รายการ</th><th class="text-right">รวม(฿)</th></tr></thead>
+                <tbody>${items.map(item => `<tr><td>${item.name}<br><span style="color:#555">${item.weightString}=${item.weight} กก. x ${item.price}</span></td><td class="text-right" style="vertical-align: top;">${item.total.toLocaleString(undefined, {minimumFractionDigits: 2})}</td></tr>`).join('')}</tbody>
+            </table>
+            <hr class="slip-divider">
+            <div class="slip-total">ยอดสุทธิ: ${totalAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} บาท</div>
+            <div style="text-align: center; margin-top: 20px; font-size: 12px;">ขอบคุณที่ใช้บริการครับ</div>`;
+        }
+
+        function processCheckout(shouldPrint) {
+            if (cart.length === 0) return alert('กรุณาเพิ่มสินค้าลงในบิลก่อนครับ');
+            if (!confirm('ยืนยันการบันทึกยอดบิลนี้ใช่หรือไม่?')) return; 
+
+            const totalAmount = cart.reduce((sum, item) => sum + item.total, 0); 
+            const billNo = "B" + Date.now().toString().slice(-6); 
+            
+            const d = new Date();
+            const yyyy = d.getFullYear();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            const dateOnly = `${yyyy}-${mm}-${dd}`; 
+            
+            const currentDate = d.toLocaleString('th-TH');
+            
+            const newBill = { billNo, date: currentDate, dateOnly: dateOnly, items: [...cart], total: totalAmount };
+            db.ref('pos_bills').push(newBill);
+
+            if (shouldPrint) { 
+                document.getElementById('printArea').innerHTML = renderReceiptHTML(billNo, currentDate, cart, totalAmount); 
+                window.print(); 
+            }
+            
+            cart = []; updateCartUI();
+            document.getElementById('rightPanel').classList.remove('show');
+        }
+
+        function getFilteredBills() {
+            const filterDate = document.getElementById('filterDate') ? document.getElementById('filterDate').value : '';
+            if (!filterDate) return globalBills; 
+            
+            return globalBills.filter(b => {
+                if (b.dateOnly) {
+                    return b.dateOnly === filterDate;
+                } else {
+                    const [fy, fm, fd] = filterDate.split('-');
+                    const searchAD = `${parseInt(fd)}/${parseInt(fm)}/${fy}`;
+                    const searchBE = `${parseInt(fd)}/${parseInt(fm)}/${parseInt(fy)+543}`;
+                    return b.date.includes(searchAD) || b.date.includes(searchBE) || b.date.includes(`${fd}/${fm}/${fy}`);
+                }
+            });
+        }
+
+        function printOldBill(key) {
+            const bill = globalBills.find(b => b.key === key);
+            if(bill) {
+                document.getElementById('printArea').innerHTML = renderReceiptHTML(bill.billNo, bill.date, bill.items, bill.total);
+                window.print();
+            }
+        }
+
+        function renderHistoryUI() {
+            const historyList = document.getElementById('historyList'); 
+            const currentBills = getFilteredBills(); 
+            
+            let totalDayAmount = 0; let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
+            
+            if (currentBills.length === 0) { 
+                historyList.innerHTML = '<p style="text-align:center; color:#94a3b8; margin-top: 15px;">ไม่พบประวัติในวันที่เลือก</p>'; 
+            } else {
+                totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0);
+                currentBills.forEach(bill => { 
+                    bill.items.forEach(item => { 
+                        if (item.name === "ล.หนา") sumNa += item.weight; 
+                        if (item.name === "ล.ธรรมดา") sumTham += item.weight; 
+                        if (item.name === "ล.บาง") sumBang += item.weight; 
+                        if (item.category === "ทองแดง") sumCopper += item.weight; 
+                        if (item.category === "ทองเหลือง") sumBrass += item.weight; 
+                        if (item.category === "เลส") sumStainless += item.weight; 
+                    }); 
+                });
+                
+                historyList.innerHTML = currentBills.slice().reverse().map(bill => `
+                    <div class="history-item">
+                        <div class="history-item-header">
+                            <div><span style="font-weight: 600; color: var(--dark);">บิล: ${bill.billNo}</span> <span style="margin-left:8px;">${bill.date}</span></div>
+                            <div>
+                                <button onclick="printOldBill('${bill.key}')" style="background: var(--primary-light); color: var(--primary); border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; margin-right: 5px;">🖨️ พิมพ์</button>
+                                <button onclick="deleteBill('${bill.key}', '${bill.billNo}')" style="background: #fee2e2; color: var(--danger); border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">🗑️ ลบ</button>
+                            </div>
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">${bill.items.map(i => {
+                            return `${i.name}[${i.weightString}=${i.weight}]`;
+                        }).join(', ')}</div>
+                        <div class="history-item-total">${bill.total.toLocaleString(undefined, {minimumFractionDigits:2})} ฿</div>
+                    </div>`).join('');
+            }
+            
+            document.getElementById('totalBillsCount').innerText = currentBills.length; 
+            document.getElementById('totalDayAmount').innerText = totalDayAmount.toLocaleString(undefined, {minimumFractionDigits:2}); 
+            document.getElementById('sumLonNa').innerText = sumNa.toFixed(1); 
+            document.getElementById('sumLonTham').innerText = sumTham.toFixed(1); 
+            document.getElementById('sumLonBang').innerText = sumBang.toFixed(1); 
+            document.getElementById('sumCopper').innerText = sumCopper.toFixed(1); 
+            document.getElementById('sumBrass').innerText = sumBrass.toFixed(1); 
+            document.getElementById('sumStainless').innerText = sumStainless.toFixed(1); 
+        }
+
+        function openHistory() {
+            const dateInput = document.getElementById('filterDate');
+            if(!dateInput.value) {
+                const d = new Date();
+                const yyyy = d.getFullYear();
+                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                const dd = String(d.getDate()).padStart(2, '0');
+                dateInput.value = `${yyyy}-${mm}-${dd}`;
+            }
+            renderHistoryUI();
+            document.getElementById('historyModal').style.display = 'flex';
+        }
+
+        function deleteBill(key, billNo) {
+            if(confirm(`คุณแน่ใจหรือไม่ที่จะลบบิลเลขที่ ${billNo} ?\n(ข้อมูลนี้จะถูกลบออกจากคลาวด์ถาวร)`)) {
+                db.ref('pos_bills/' + key).remove();
+            }
+        }
+
+        function printSummary() {
+            const currentBills = getFilteredBills();
+            if (currentBills.length === 0) return alert('ไม่มีรายการให้สรุปครับ');
+            
+            const filterDate = document.getElementById('filterDate').value;
+            const printTitleDate = filterDate ? `ประจำวันที่: ${filterDate}` : `รวมทุกวันทั้งหมด`;
+            
+            const totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0); 
+            const currentDate = new Date().toLocaleString('th-TH'); 
+            let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
+            
+            currentBills.forEach(bill => { bill.items.forEach(item => { if (item.name === "ล.หนา") sumNa += item.weight; if (item.name === "ล.ธรรมดา") sumTham += item.weight; if (item.name === "ล.บาง") sumBang += item.weight; if (item.category === "ทองแดง") sumCopper += item.weight; if (item.category === "ทองเหลือง") sumBrass += item.weight; if (item.category === "เลส") sumStainless += item.weight; }); });
+            
+            document.getElementById('printArea').innerHTML = `<div class="slip-header"><h3>สรุปยอด (Z-Report)</h3><p>${printTitleDate}</p><p>เวลาพิมพ์: ${currentDate}</p></div><hr class="slip-divider"><table class="slip-table" style="font-size: 14px;"><tr><td style="padding: 10px 0;">จำนวนบิลรับซื้อ:</td><td class="text-right" style="font-weight:bold;">${currentBills.length} บิล</td></tr><tr><td style="padding: 10px 0;">ยอดจ่ายรวมทั้งสิ้น:</td><td class="text-right" style="font-weight:bold; font-size: 16px;">${totalDayAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</td></tr></table><hr class="slip-divider"><div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">📊 สรุปน้ำหนักรับซื้อสุทธิ (กก.)</div><table class="slip-table" style="font-size: 13px;"><tr><td style="padding: 4px 0;">- ล.หนา</td><td class="text-right" style="font-weight:bold;">${sumNa.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">- ล.ธรรมดา</td><td class="text-right" style="font-weight:bold;">${sumTham.toFixed(1)}</td></tr><tr><td style="padding: 4px 0; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">- ล.บาง</td><td class="text-right" style="font-weight:bold; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">${sumBang.toFixed(1)}</td></tr><tr><td style="padding: 8px 0 4px 0;">🔥 ทองแดงรวม</td><td class="text-right" style="font-weight:bold; padding-top: 8px;">${sumCopper.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">✨ ทองเหลืองรวม</td><td class="text-right" style="font-weight:bold;">${sumBrass.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">⚙️ เลสรวม</td><td class="text-right" style="font-weight:bold;">${sumStainless.toFixed(1)}</td></tr></table><hr class="slip-divider"><div style="text-align: center; margin-top: 40px; font-size: 12px;">ผู้ตรวจนับเงิน........................................</div>`;
+            window.print();
+        }
+
+        function exportToCSV() {
+            const currentBills = getFilteredBills();
+            if (currentBills.length === 0) return alert('ไม่มีรายการให้ส่งออกครับ');
+            
+            let csvContent = "เลขที่บิล,วันที่-เวลา,หมวดหมู่,รายการสินค้า,ราคา/หน่วย,สมการน้ำหนัก,น้ำหนักสุทธิ,รวมเงิน(รายการ),ยอดรวมสุทธิทั้งบิล(บาท)\n";
+            currentBills.forEach(bill => { let isFirstItem = true; bill.items.forEach(item => { let row = [ bill.billNo, `"${bill.date}"`, item.category, item.name, item.price, `"${item.weightString}"`, item.weight, item.total, isFirstItem ? bill.total : "" ]; csvContent += row.join(",") + "\n"; isFirstItem = false; }); });
+            const BOM = "\uFEFF"; const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); const url = URL.createObjectURL(blob);
+            const today = new Date(); const dateStr = `${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`;
+            link.setAttribute("href", url); link.setAttribute("download", `รายงานรับซื้อ_${dateStr}.csv`); link.style.visibility = 'hidden'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        }
+
+        function clearHistory() { 
+            const filterDate = document.getElementById('filterDate') ? document.getElementById('filterDate').value : '';
+            const msg = filterDate ? `คุณต้องการล้างประวัติบิลของวันที่เลือก (${filterDate}) ใช่หรือไม่?\n(ข้อมูลจะถูกลบถาวร)` : `⚠️ คำเตือน: คุณกำลังเลือกล้างประวัติบิล **ทั้งหมดทุกวัน** ใช่หรือไม่?\n(ข้อมูลจะหายไปทั้งหมด!)`;
+            
+            if(confirm(msg)) { 
+                const currentBills = getFilteredBills();
+                currentBills.forEach(bill => {
+                    db.ref('pos_bills/' + bill.key).remove();
+                });
+            } 
+        }
+        
+        init();
+    
+        function openCustomModal() {
+            document.getElementById('customName').value = '';
+            document.getElementById('customPrice').value = '';
+            document.getElementById('customWeight').value = '';
+            setActiveInput('customPrice'); 
+            document.getElementById('customModal').style.display = 'flex';
+        }
+
+        function confirmAddCustom() {
+            let name = document.getElementById('customName').value.trim();
+            if (!name) name = 'รายการอื่นๆ';
+
+            let priceExpr = document.getElementById('customPrice').value.trim();
+            let price = evaluateExpression(priceExpr);
+            if (price <= 0) return alert('กรุณาระบุราคาให้ถูกต้อง (มากกว่า 0)');
+
+            let weightExpr = document.getElementById('customWeight').value.trim();
+            let weight = evaluateExpression(weightExpr);
+            if (weight === 0) return alert('กรุณาระบุจำนวนหรือน้ำหนักให้ถูกต้อง');
+
+            cart.push({
+                id: Date.now() + Math.random(),
+                productId: 'custom-' + Date.now(),
+                name: name,
+                category: "อื่นๆ",
+                price: price,
+                weight: weight,
+                weightString: weightExpr,
+                total: price * weight
+            });
+
+            closeModal('customModal');
+            updateCartUI();
+        }
+
+    </script>
+</body>
+</html>
