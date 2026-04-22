@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>(ร้านPOPค้าของเก่า) - สาขา 2</title>
+    <title>(ร้านPOPค้าของเก่า)</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -83,6 +83,7 @@
             .items-grid { padding-bottom: 100px; overflow-y: visible; } 
             .right-panel { position: fixed; top: 100vh; left: 0; width: 100%; height: 100dvh; border-radius: 0; padding: 20px; box-shadow: 0 -10px 40px rgba(0,0,0,0.15); transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 200; padding-bottom: env(safe-area-inset-bottom, 20px); } 
             .right-panel.show { top: 0; } 
+            
             .mobile-cart-bar { display: flex; justify-content: space-between; align-items: center; position: fixed; bottom: 20px; left: 5%; width: 90%; background: var(--dark); color: white; padding: 14px 24px; border-radius: 100px; box-shadow: 0 10px 25px rgba(30, 41, 59, 0.4); z-index: 150; cursor: pointer; transition: transform 0.2s; }
             .mobile-cart-bar:active { transform: scale(0.97); }
             .close-cart-btn { display: inline-block; background: #f1f5f9; color: var(--text-main); border: none; padding: 8px 16px; border-radius: 12px; font-weight: 600; font-size: 14px; margin-left: auto; cursor: pointer; }
@@ -148,14 +149,17 @@
                 <button class="num-btn" onclick="numPress('8')">8</button>
                 <button class="num-btn" onclick="numPress('9')">9</button>
                 <button class="num-btn btn-op" onclick="numPress('+')">+</button>
+                
                 <button class="num-btn" onclick="numPress('4')">4</button>
                 <button class="num-btn" onclick="numPress('5')">5</button>
                 <button class="num-btn" onclick="numPress('6')">6</button>
                 <button class="num-btn btn-op" style="color: var(--danger); background: #fee2e2; border-color: #fca5a5; box-shadow: 0 2px 0 #fca5a5;" onclick="numPress('-')">-</button>
+                
                 <button class="num-btn" onclick="numPress('1')">1</button>
                 <button class="num-btn" onclick="numPress('2')">2</button>
                 <button class="num-btn" onclick="numPress('3')">3</button>
                 <button class="num-btn btn-del" onclick="numDel()">⌫</button>
+                
                 <button class="num-btn" style="color: var(--danger); font-weight: bold;" onclick="numClear()">C</button>
                 <button class="num-btn" onclick="numPress('0')">0</button>
                 <button class="num-btn" onclick="numPress('.')">.</button>
@@ -172,8 +176,10 @@
     <div class="modal-overlay" id="customModal">
         <div class="modal-content" style="text-align: center;">
             <h2 style="margin-bottom: 15px; color: var(--dark); font-size: 22px;">➕ เพิ่มรายการอื่นๆ</h2>
+            
             <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">ชื่อรายการ</label>
             <input type="text" id="customName" placeholder="เช่น เหล็กพิเศษ, หักค่าบริการ..." style="width: 100%; padding: 12px; font-size: 18px; border: 2px solid var(--border); border-radius: 12px; margin-bottom: 15px; color: var(--dark); font-weight: 600; background: #f8fafc; outline: none; font-family: 'Prompt';" onfocus="activeInputId = null; document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active')); this.style.borderColor = 'var(--primary)'; this.style.background = '#fff';" onblur="this.style.borderColor = 'var(--border)'; this.style.background = '#f8fafc';">
+            
             <div style="display: flex; gap: 10px;">
                 <div style="flex: 1;">
                     <label style="display: block; text-align: left; font-size: 14px; color: var(--text-muted); margin-bottom: 6px;">ราคา (บาท/หน่วย)</label>
@@ -190,14 +196,17 @@
                 <button class="num-btn" onclick="numPress('8')">8</button>
                 <button class="num-btn" onclick="numPress('9')">9</button>
                 <button class="num-btn btn-op" onclick="numPress('+')">+</button>
+                
                 <button class="num-btn" onclick="numPress('4')">4</button>
                 <button class="num-btn" onclick="numPress('5')">5</button>
                 <button class="num-btn" onclick="numPress('6')">6</button>
                 <button class="num-btn btn-op" style="color: var(--danger); background: #fee2e2; border-color: #fca5a5; box-shadow: 0 2px 0 #fca5a5;" onclick="numPress('-')">-</button>
+                
                 <button class="num-btn" onclick="numPress('1')">1</button>
                 <button class="num-btn" onclick="numPress('2')">2</button>
                 <button class="num-btn" onclick="numPress('3')">3</button>
                 <button class="num-btn btn-del" onclick="numDel()">⌫</button>
+                
                 <button class="num-btn" style="color: var(--danger); font-weight: bold;" onclick="numClear()">C</button>
                 <button class="num-btn" onclick="numPress('0')">0</button>
                 <button class="num-btn" onclick="numPress('.')">.</button>
@@ -210,7 +219,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal-overlay" id="historyModal">
         <div class="modal-content">
             <h2 style="margin-bottom: 15px; text-align: center; color: var(--dark); font-size: 20px;">📜 ประวัติ / สรุปยอด</h2>
@@ -234,7 +242,6 @@
                 <div style="display: flex; justify-content: space-between; color: #334155;"><span>⚙️ เลสรวม:</span><strong id="sumStainless">0.0</strong></div>
             </div>
             <div id="historyList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px; background: #f8fafc; border-radius: 12px; padding: 10px;"></div>
-            
             <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                 <button class="btn-modal" style="background: var(--dark); color: white; flex: 1;" onclick="printSummary()">🖨️ พิมพ์สรุป</button>
                 <button class="btn-modal" style="background: #10b981; color: white; flex: 1;" onclick="exportToCSV()">📊 โหลด Excel</button>
@@ -249,7 +256,7 @@
     <div id="printArea"></div>
 
     <script>
-        // ข้อมูล Firebase สำหรับ pop2 (ถูกต้อง 100%)
+        // Updated with new credentials here
         const firebaseConfig = {
             apiKey: "AIzaSyCxFoL6fkV8Vy900VsbRNWEs642gXuG_AE",
             authDomain: "pop2-e301c.firebaseapp.com",
@@ -257,15 +264,12 @@
             projectId: "pop2-e301c",
             storageBucket: "pop2-e301c.firebasestorage.app",
             messagingSenderId: "186999001428",
-            appId: "1:186999001428:web:2f62fff60937f20b1fb8c1",
-            measurementId: "G-98WRWGXH8K"
+            appId: "1:186999001428:web:2e86b6e09d88de871fb8c1",
+            measurementId: "G-GNYMXY117H"
         };
-        firebase.initializeApp(firebaseConfig); 
-        firebase.analytics(); 
-        const db = firebase.database();
+        firebase.initializeApp(firebaseConfig); firebase.analytics(); const db = firebase.database();
         let globalBills = [];
 
-        // รายการสินค้า
         let products = [
             { id: 1, name: "ล.หนา", category: "เหล็ก", price: 10.7, img: "https://static.wixstatic.com/media/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_9b870aa5844d4cb09d3d5582a1d52918~mv2.jpg" },
             { id: 2, name: "ล.ธรรมดา", category: "เหล็ก", price: 10.3, img: "https://static.wixstatic.com/media/fbf885_a1368c183d92470dbe7a575fa82d0350~mv2.jpg/v1/fit/w_464,h_797,q_90,enc_avif,quality_auto/fbf885_a1368c183d92470dbe7a575fa82d0350~mv2.jpg" },
@@ -344,301 +348,359 @@
             { id: 75, name: "หงส์(แบน)", category: "ลังเบียร์", price: 10.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjTSuJzzDm-1_XODbJsUHcuHgv_H2NY9bRGg&s" }
         ];
 
-        let cart = [];
-        let currentCategory = 'ทั้งหมด';
-        let activeProduct = null;
-        let activeInputId = 'weightInput';
+        let cart = []; let currentItem = null; let activeInputId = 'weightInput';
 
-        function init() {
-            renderCategories();
-            renderProducts();
-            loadHistory();
+        function setupFirebaseListeners() {
+            db.ref('pos_custom_prices').on('value', (snapshot) => {
+                const savedPrices = snapshot.val() || {};
+                products.forEach(p => { if (savedPrices[p.id] !== undefined) p.price = savedPrices[p.id]; });
+                const activeCatBtn = document.querySelector('.cat-btn.active'); if(activeCatBtn) renderItems(activeCatBtn.innerText);
+            });
+            db.ref('pos_bills').on('value', (snapshot) => {
+                globalBills = []; snapshot.forEach(child => { globalBills.push({ key: child.key, ...child.val() }); });
+                if(document.getElementById('historyModal').style.display === 'flex') { renderHistoryUI(); }
+            });
         }
+        
+        function init() { setupFirebaseListeners(); renderCategories(); renderItems('ทั้งหมด'); }
 
         function renderCategories() {
-            const categories = ['ทั้งหมด', ...new Set(products.map(p => p.category))];
             const container = document.getElementById('categoryList');
-            container.innerHTML = '';
-            categories.forEach(cat => {
-                const btn = document.createElement('button');
-                btn.className = `cat-btn ${cat === currentCategory ? 'active' : ''}`;
-                btn.innerText = cat;
-                btn.onclick = () => { currentCategory = cat; renderCategories(); renderProducts(); };
-                container.appendChild(btn);
-            });
+            const menuOrder = ['ทั้งหมด', 'เหล็ก', 'พลาสติก', 'ดาษ', 'ขวด', 'ลังเบียร์', 'เนียม', 'สังกะสี', 'ถอด', 'ทองแดง', 'ทองเหลือง', 'เลส', 'PVC', 'หม้อน้ำ', 'แบต', 'ตู้เย็น'];
+            const allCats = [...new Set(products.map(p => p.category))];
+            const finalOrder = menuOrder.filter(c => c === 'ทั้งหมด' || allCats.includes(c));
+            container.innerHTML = finalOrder.map(c => `<button class="cat-btn ${c==='ทั้งหมด'?'active':''}" onclick="filterCat(this, '${c}')">${c}</button>`).join('');
         }
 
-        function renderProducts() {
-            const container = document.getElementById('itemsGrid');
-            container.innerHTML = '';
-            const filtered = currentCategory === 'ทั้งหมด' ? products : products.filter(p => p.category === currentCategory);
-            
-            filtered.forEach(p => {
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.onclick = () => openWeightModal(p);
-                card.innerHTML = `
-                    <div class="category-label">${p.category}</div>
-                    <img src="${p.img}" alt="${p.name}" class="item-img" onerror="this.src='https://via.placeholder.com/150?text=No+Image'">
-                    <div class="item-info">
-                        <div class="item-name">${p.name}</div>
-                        <div class="item-price">${p.price.toFixed(2)} ฿</div>
-                    </div>
-                `;
-                container.appendChild(card);
-            });
+        function filterCat(btn, cat) { document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderItems(cat); }
+
+        function renderItems(cat) {
+            const grid = document.getElementById('itemsGrid'); let html = '';
+            if (cat === 'ทั้งหมด') {
+                grid.style.display = 'block';
+                const customOrder = ['เหล็ก', 'พลาสติก', 'ดาษ', 'ขวด', 'ลังเบียร์', 'เนียม', 'สังกะสี', 'ถอด', 'ทองแดง', 'ทองเหลือง'];
+                const allAvailableCats = [...new Set(products.map(p => p.category))];
+                const finalDisplayOrder = [...customOrder.filter(c => allAvailableCats.includes(c)), ...allAvailableCats.filter(c => !customOrder.includes(c))];
+                finalDisplayOrder.forEach(c => {
+                    const itemsInCat = products.filter(p => p.category === c);
+                    if (itemsInCat.length > 0) {
+                        html += `<div style="margin-bottom: 25px;"><div style="display: flex; align-items: center; margin-bottom: 12px;"><span style="background: var(--primary); width: 6px; height: 18px; border-radius: 4px; margin-right: 8px;"></span><h3 style="font-size: 15px; font-weight: 600; color: var(--dark); margin: 0;">${c}</h3></div><div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;">${itemsInCat.map(p => `<div class="item-card" onclick="openModal(${p.id})" style="flex: 0 0 120px;"><div class="category-label">${c}</div><img src="${p.img}" class="item-img" loading="lazy"><div class="item-info"><div class="item-name">${p.name}</div><div class="item-price">${p.price} ฿</div></div></div>`).join('')}</div></div>`;
+                    }
+                });
+            } else {
+                grid.style.display = 'grid';
+                const filtered = products.filter(p => p.category === cat);
+                html = filtered.map(p => `<div class="item-card" onclick="openModal(${p.id})"><div class="category-label">${cat}</div><img src="${p.img}" class="item-img" loading="lazy"><div class="item-info"><div class="item-name">${p.name}</div><div class="item-price">${p.price} ฿</div></div></div>`).join('');
+            }
+            grid.innerHTML = html;
         }
 
-        function openWeightModal(product) {
-            activeProduct = product;
-            document.getElementById('modalItemName').innerText = product.name;
-            document.getElementById('displayPriceText').innerText = product.price.toFixed(2) + ' ฿/กก.';
-            document.getElementById('weightInput').value = '';
-            document.getElementById('priceEditBox').style.display = 'none';
-            setActiveInput('weightInput');
-            document.getElementById('weightModal').style.display = 'flex';
-        }
-
+        function setActiveInput(id) { activeInputId = id; document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+        
         function evaluateExpression(expr) {
+            if (!expr) return 0;
+            expr = expr.replace(/[+\-.]+$/, '');
+            if (expr === '') return 0;
             try {
-                if (!expr) return 0;
-                let sanitized = expr.replace(/[^-()\d/*+.]/g, '');
-                let result = new Function('return ' + sanitized)();
-                return isNaN(result) ? 0 : result;
-            } catch (e) {
-                return 0;
-            }
-        }
-
-        function numPress(val) {
-            if (!activeInputId) return;
-            let input = document.getElementById(activeInputId);
-            input.value += val;
-        }
-
-        function numDel() {
-            if (!activeInputId) return;
-            let input = document.getElementById(activeInputId);
-            input.value = input.value.slice(0, -1);
-        }
-
-        function numClear() {
-            if (!activeInputId) return;
-            document.getElementById(activeInputId).value = '';
-        }
-
-        function calcMath() {
-            if (!activeInputId) return;
-            let input = document.getElementById(activeInputId);
-            let result = evaluateExpression(input.value);
-            input.value = Number.isInteger(result) ? result : result.toFixed(2);
-        }
-
-        function toggleEditPrice() {
-            const box = document.getElementById('priceEditBox');
-            if (box.style.display === 'none') {
-                box.style.display = 'block';
-                document.getElementById('newPriceInput').value = activeProduct.price;
-                setActiveInput('newPriceInput');
-            } else {
-                box.style.display = 'none';
-                setActiveInput('weightInput');
-            }
-        }
-
-        function saveNewPrice() {
-            let expr = document.getElementById('newPriceInput').value;
-            let newP = evaluateExpression(expr);
-            if (newP > 0) {
-                activeProduct.price = newP;
-                document.getElementById('displayPriceText').innerText = newP.toFixed(2) + ' ฿/กก.';
-                document.getElementById('priceEditBox').style.display = 'none';
-                setActiveInput('weightInput');
-                renderProducts(); 
-            } else {
-                alert('กรุณาระบุราคาให้ถูกต้อง');
-            }
-        }
-
-        function setActiveInput(id) {
-            activeInputId = id;
-            document.querySelectorAll('.modal-input').forEach(el => el.classList.remove('active'));
-            if(id) document.getElementById(id).classList.add('active');
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-
-        function confirmAddItem() {
-            let expr = document.getElementById('weightInput').value.trim();
-            if (!expr) return alert('กรุณาระบุจำนวน');
-            
-            let finalWeight = evaluateExpression(expr);
-            if (finalWeight === 0) return alert('จำนวนไม่ถูกต้อง');
-
-            cart.push({
-                id: Date.now() + Math.random(),
-                productId: activeProduct.id,
-                name: activeProduct.name,
-                category: activeProduct.category,
-                price: activeProduct.price,
-                weight: finalWeight,
-                weightString: expr,
-                total: activeProduct.price * finalWeight
-            });
-
-            closeModal('weightModal');
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const list = document.getElementById('cartList');
-            list.innerHTML = '';
-            let total = 0;
-
-            cart.forEach((item, index) => {
-                total += item.total;
-                const div = document.createElement('div');
-                div.className = 'cart-item';
-                div.innerHTML = `
-                    <div class="cart-item-info">
-                        <b>${item.name}</b>
-                        <small>${item.weightString} x ${item.price.toFixed(2)} ฿</small>
-                        <button class="btn-remove" onclick="removeFromCart(${index})">ลบ</button>
-                    </div>
-                    <div class="cart-item-price">
-                        <b>${item.total.toFixed(2)}</b>
-                    </div>
-                `;
-                list.appendChild(div);
-            });
-
-            document.getElementById('grandTotal').innerText = total.toFixed(2);
-            document.getElementById('mobileCartCount').innerText = `${cart.length} รายการ`;
-            document.getElementById('mobileCartTotal').innerText = total.toFixed(2);
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function toggleMobileCart() {
-            if (window.innerWidth <= 900) {
-                document.getElementById('rightPanel').classList.toggle('show');
-            }
-        }
-
-        function processCheckout(printOnly) {
-            if (cart.length === 0) return alert('ไม่มีรายการในตะกร้า');
-            
-            const total = cart.reduce((sum, item) => sum + item.total, 0);
-            const billData = {
-                timestamp: Date.now(),
-                dateStr: new Date().toLocaleDateString('th-TH'),
-                items: cart,
-                total: total
-            };
-
-            if (!printOnly) {
-                db.ref('bills').push(billData).then(() => {
-                    generatePrintSlip(billData);
-                    cart = [];
-                    updateCartUI();
-                    if (window.innerWidth <= 900) toggleMobileCart();
-                }).catch(error => {
-                    console.error("Error saving bill:", error);
-                    alert("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
-                });
-            } else {
-                generatePrintSlip(billData);
-            }
-        }
-
-        function loadHistory() {
-            db.ref('bills').on('value', snapshot => {
-                globalBills = [];
-                snapshot.forEach(child => {
-                    globalBills.push({ key: child.key, ...child.val() });
-                });
-                globalBills.sort((a, b) => b.timestamp - a.timestamp);
-                renderHistoryUI();
-            });
-        }
-
-        function openHistory() {
-            document.getElementById('historyModal').style.display = 'flex';
-            renderHistoryUI();
-        }
-
-        function renderHistoryUI() {
-            const list = document.getElementById('historyList');
-            list.innerHTML = '';
-            const filterDateStr = document.getElementById('filterDate').value;
-            
-            let filteredBills = globalBills;
-            if (filterDateStr) {
-                const dateObj = new Date(filterDateStr);
-                const thaiDateStr = dateObj.toLocaleDateString('th-TH');
-                filteredBills = globalBills.filter(b => b.dateStr === thaiDateStr);
-            }
-
-            let totalAmount = 0;
-            let sumLonNa = 0, sumLonTham = 0, sumLonBang = 0;
-            let sumCopper = 0, sumBrass = 0, sumStainless = 0;
-
-            filteredBills.forEach(bill => {
-                totalAmount += bill.total;
-                
-                let itemsHtml = '';
-                if (bill.items) {
-                    bill.items.forEach(item => {
-                        itemsHtml += `<div style="display:flex; justify-content:space-between; font-size:13px; color:#475569; margin-bottom:4px; padding-left:10px;">
-                            <span>- ${item.name} (${item.weightString})</span>
-                            <span>${item.total.toFixed(2)}</span>
-                        </div>`;
-                        
-                        let w = Number(item.weight) || 0;
-                        if (item.name.includes("ล.หนา")) sumLonNa += w;
-                        if (item.name.includes("ล.ธรรมดา")) sumLonTham += w;
-                        if (item.name.includes("ล.บาง")) sumLonBang += w;
-                        if (item.name.includes("ทองแดง")) sumCopper += w;
-                        if (item.name.includes("ทองเหลือง")) sumBrass += w;
-                        if (item.name.includes("เลส")) sumStainless += w;
-                    });
+                if (/^[0-9+\-.]+$/.test(expr)) {
+                    return Math.round(new Function('return ' + expr)() * 100) / 100;
                 }
-
-                const div = document.createElement('div');
-                div.className = 'history-item';
-                div.innerHTML = `
-                    <div class="history-item-header">
-                        <span>${new Date(bill.timestamp).toLocaleString('th-TH')}</span>
-                        <button onclick="deleteBill('${bill.key}')" style="background:none; border:none; color:var(--danger); cursor:pointer; font-size:16px;">🗑️</button>
-                    </div>
-                    ${itemsHtml}
-                    <div class="history-item-total">รวม: ${bill.total.toFixed(2)} ฿</div>
-                `;
-                list.appendChild(div);
-            });
-
-            document.getElementById('totalBillsCount').innerText = filteredBills.length;
-            document.getElementById('totalDayAmount').innerText = totalAmount.toLocaleString('th-TH', {minimumFractionDigits: 2});
-            
-            document.getElementById('sumLonNa').innerText = sumLonNa.toFixed(1);
-            document.getElementById('sumLonTham').innerText = sumLonTham.toFixed(1);
-            document.getElementById('sumLonBang').innerText = sumLonBang.toFixed(1);
-            document.getElementById('sumCopper').innerText = sumCopper.toFixed(1);
-            document.getElementById('sumBrass').innerText = sumBrass.toFixed(1);
-            document.getElementById('sumStainless').innerText = sumStainless.toFixed(1);
+            } catch(e) {}
+            return 0;
         }
 
-        function deleteBill(key) {
-            if (confirm('คุณแน่ใจหรือไม่ว่าต้องการลบบิลนี้? (ข้อมูลจะหายไปจากฐานข้อมูลเลย)')) {
-                db.ref('bills/' + key).remove();
+        function numPress(val) { 
+            const input = document.getElementById(activeInputId); 
+            let current = input.value;
+            
+            if (current === '0' && val === '-') { input.value = '-'; return; }
+            if (current === '' && val === '-') { input.value = '-'; return; }
+
+            const lastChar = current.slice(-1);
+            if (['+', '-', '.'].includes(val) && ['+', '-', '.'].includes(lastChar)) {
+                input.value = current.slice(0, -1) + val;
+                return;
+            }
+
+            if (current === '0' && !['.', '+', '-'].includes(val)) {
+                input.value = val; 
+            } else {
+                input.value += val; 
             }
         }
         
+        function numDel() { const input = document.getElementById(activeInputId); input.value = input.value.slice(0, -1); }
+        function numClear() { document.getElementById(activeInputId).value = ''; }
+        function calcMath() {
+            const input = document.getElementById(activeInputId);
+            if(activeInputId === 'weightInput') {
+                const result = evaluateExpression(input.value);
+                if(result !== 0 || input.value === '0') input.value = result;
+            }
+        }
+
+        function openModal(id) {
+            currentItem = products.find(p => p.id === id); 
+            document.getElementById('modalItemName').innerText = currentItem.name; 
+            document.getElementById('priceEditBox').style.display = 'none';
+            updatePriceDisplay(); 
+            
+            document.getElementById('weightInput').value = ''; 
+            document.getElementById('weightModal').style.display = 'flex'; 
+            setActiveInput('weightInput');
+        }
+
+        function updatePriceDisplay() { document.getElementById('displayPriceText').innerText = `${currentItem.price.toFixed(2)} ฿/หน่วย`; document.getElementById('newPriceInput').value = currentItem.price; }
+        function toggleEditPrice() { const box = document.getElementById('priceEditBox'); if (box.style.display === 'none') { box.style.display = 'block'; setActiveInput('newPriceInput'); } else { box.style.display = 'none'; setActiveInput('weightInput'); } }
+        
+        function saveNewPrice() {
+            const newPrice = parseFloat(document.getElementById('newPriceInput').value);
+            if (newPrice >= 0) { currentItem.price = newPrice; updatePriceDisplay(); toggleEditPrice(); db.ref('pos_custom_prices/' + currentItem.id).set(newPrice); }
+        }
+
+        function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+        
+        function confirmAddItem() { 
+            let weightExpr = document.getElementById('weightInput').value.trim();
+            let weight = evaluateExpression(weightExpr);
+            
+            if (weight === 0) return alert('กรุณาระบุน้ำหนักให้ถูกต้อง'); 
+
+            let existingItemIndex = cart.findIndex(i => i.productId === currentItem.id && i.price === currentItem.price);
+
+            if (existingItemIndex !== -1) {
+                let existingItem = cart[existingItemIndex];
+                let newExprPart = weightExpr;
+                if (!newExprPart.startsWith('+') && !newExprPart.startsWith('-')) {
+                    newExprPart = '+' + newExprPart;
+                }
+                existingItem.weightString = existingItem.weightString + newExprPart;
+                existingItem.weight += weight;
+                existingItem.total = existingItem.price * existingItem.weight;
+                
+            } else {
+                cart.push({ 
+                    id: Date.now() + Math.random(), 
+                    productId: currentItem.id,
+                    name: currentItem.name, 
+                    category: currentItem.category, 
+                    price: currentItem.price, 
+                    weight: weight, 
+                    weightString: weightExpr,
+                    total: currentItem.price * weight 
+                }); 
+            }
+            
+            closeModal('weightModal'); 
+            updateCartUI(); 
+        }
+
+        function toggleMobileCart() { document.getElementById('rightPanel').classList.toggle('show'); }
+
+        function updateCartUI() {
+            const list = document.getElementById('cartList'); let total = 0;
+            
+            list.innerHTML = cart.map(item => { 
+                total += item.total; 
+                let priceColor = item.total < 0 ? 'color: var(--danger);' : 'color: var(--primary);';
+                let weightDisplayColor = item.weight === 0 ? 'color: var(--danger);' : 'color: var(--text-muted);';
+
+                return `<div class="cart-item">
+                    <div class="cart-item-info">
+                        <b>${item.name}</b>
+                        <small style="${weightDisplayColor}">${item.weightString} = ${item.weight} กก. x ${item.price} ฿</small>
+                    </div>
+                    <div class="cart-item-price">
+                        <b style="${priceColor}">${item.total.toLocaleString(undefined, {minimumFractionDigits:2})} ฿</b><br>
+                        <button class="btn-remove" onclick="removeCart('${item.id}')">ลบ</button>
+                    </div>
+                </div>`; 
+            }).join('');
+            
+            const formattedTotal = total.toLocaleString(undefined, {minimumFractionDigits:2});
+            document.getElementById('grandTotal').innerText = formattedTotal;
+
+            const mobileCountStr = cart.length > 0 ? `${cart.length} รายการ` : '0 รายการ';
+            document.getElementById('mobileCartCount').innerText = mobileCountStr;
+            document.getElementById('mobileCartTotal').innerText = formattedTotal;
+        }
+
+        function removeCart(cartId) { 
+            cart = cart.filter(i => i.id != cartId); 
+            updateCartUI(); 
+        }
+
+        function renderReceiptHTML(billNo, date, items, totalAmount) {
+            return `<div class="slip-header"><h3 style="margin-bottom: 5px; font-size: 18px;">POP RECYCLE</h3><p style="font-size: 12px; margin-bottom: 2px;"><p style="font-size: 12px; margin-bottom: 8px;">เบอร์ติดต่อ: 0945498354</p><p style="font-weight: bold; font-size: 14px;">ใบเสร็จรับเงิน</p><p>วันที่: ${date}</p><p>เลขที่บิล: ${billNo}</p></div>
+            <hr class="slip-divider">
+            <table class="slip-table">
+                <thead><tr><th>รายการ</th><th class="text-right">รวม(฿)</th></tr></thead>
+                <tbody>${items.map(item => `<tr><td>${item.name}<br><span style="color:#555">${item.weightString}=${item.weight} กก. x ${item.price}</span></td><td class="text-right" style="vertical-align: top;">${item.total.toLocaleString(undefined, {minimumFractionDigits: 2})}</td></tr>`).join('')}</tbody>
+            </table>
+            <hr class="slip-divider">
+            <div class="slip-total">ยอดสุทธิ: ${totalAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} บาท</div>
+            <div style="text-align: center; margin-top: 20px; font-size: 12px;">ขอบคุณที่ใช้บริการครับ/ค่ะ</div>`;
+        }
+
+        function processCheckout(shouldPrint) {
+            if (cart.length === 0) return alert('กรุณาเพิ่มสินค้าลงในบิลก่อนครับ');
+            if (!confirm('ยืนยันการบันทึกยอดบิลนี้ใช่หรือไม่?')) return; 
+
+            const totalAmount = cart.reduce((sum, item) => sum + item.total, 0); 
+            const billNo = "B" + Date.now().toString().slice(-6); 
+            
+            const d = new Date();
+            const yyyy = d.getFullYear();
+            const mm = String(d.getMonth() + 1).padStart(2, '0');
+            const dd = String(d.getDate()).padStart(2, '0');
+            const dateOnly = `${yyyy}-${mm}-${dd}`; 
+            
+            const currentDate = d.toLocaleString('th-TH');
+            
+            const newBill = { billNo, date: currentDate, dateOnly: dateOnly, items: [...cart], total: totalAmount };
+            db.ref('pos_bills').push(newBill);
+
+            if (shouldPrint) { 
+                document.getElementById('printArea').innerHTML = renderReceiptHTML(billNo, currentDate, cart, totalAmount); 
+                window.print(); 
+            }
+            
+            cart = []; updateCartUI();
+            document.getElementById('rightPanel').classList.remove('show');
+        }
+
+        function getFilteredBills() {
+            const filterDate = document.getElementById('filterDate') ? document.getElementById('filterDate').value : '';
+            if (!filterDate) return globalBills; 
+            
+            return globalBills.filter(b => {
+                if (b.dateOnly) {
+                    return b.dateOnly === filterDate;
+                } else {
+                    const [fy, fm, fd] = filterDate.split('-');
+                    const searchAD = `${parseInt(fd)}/${parseInt(fm)}/${fy}`;
+                    const searchBE = `${parseInt(fd)}/${parseInt(fm)}/${parseInt(fy)+543}`;
+                    return b.date.includes(searchAD) || b.date.includes(searchBE) || b.date.includes(`${fd}/${fm}/${fy}`);
+                }
+            });
+        }
+
+        function printOldBill(key) {
+            const bill = globalBills.find(b => b.key === key);
+            if(bill) {
+                document.getElementById('printArea').innerHTML = renderReceiptHTML(bill.billNo, bill.date, bill.items, bill.total);
+                window.print();
+            }
+        }
+
+        function renderHistoryUI() {
+            const historyList = document.getElementById('historyList'); 
+            const currentBills = getFilteredBills(); 
+            
+            let totalDayAmount = 0; let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
+            
+            if (currentBills.length === 0) { 
+                historyList.innerHTML = '<p style="text-align:center; color:#94a3b8; margin-top: 15px;">ไม่พบประวัติในวันที่เลือก</p>'; 
+            } else {
+                totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0);
+                currentBills.forEach(bill => { 
+                    bill.items.forEach(item => { 
+                        if (item.name === "ล.หนา") sumNa += item.weight; 
+                        if (item.name === "ล.ธรรมดา") sumTham += item.weight; 
+                        if (item.name === "ล.บาง") sumBang += item.weight; 
+                        if (item.category === "ทองแดง") sumCopper += item.weight; 
+                        if (item.category === "ทองเหลือง") sumBrass += item.weight; 
+                        if (item.category === "เลส") sumStainless += item.weight; 
+                    }); 
+                });
+                
+                historyList.innerHTML = currentBills.slice().reverse().map(bill => `
+                    <div class="history-item">
+                        <div class="history-item-header">
+                            <div><span style="font-weight: 600; color: var(--dark);">บิล: ${bill.billNo}</span> <span style="margin-left:8px;">${bill.date}</span></div>
+                            <div>
+                                <button onclick="printOldBill('${bill.key}')" style="background: var(--primary-light); color: var(--primary); border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; margin-right: 5px;">🖨️ พิมพ์</button>
+                                <button onclick="deleteBill('${bill.key}', '${bill.billNo}')" style="background: #fee2e2; color: var(--danger); border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600;">🗑️ ลบ</button>
+                            </div>
+                        </div>
+                        <div style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">${bill.items.map(i => {
+                            return `${i.name}[${i.weightString}=${i.weight}]`;
+                        }).join(', ')}</div>
+                        <div class="history-item-total">${bill.total.toLocaleString(undefined, {minimumFractionDigits:2})} ฿</div>
+                    </div>`).join('');
+            }
+            
+            document.getElementById('totalBillsCount').innerText = currentBills.length; 
+            document.getElementById('totalDayAmount').innerText = totalDayAmount.toLocaleString(undefined, {minimumFractionDigits:2}); 
+            document.getElementById('sumLonNa').innerText = sumNa.toFixed(1); 
+            document.getElementById('sumLonTham').innerText = sumTham.toFixed(1); 
+            document.getElementById('sumLonBang').innerText = sumBang.toFixed(1); 
+            document.getElementById('sumCopper').innerText = sumCopper.toFixed(1); 
+            document.getElementById('sumBrass').innerText = sumBrass.toFixed(1); 
+            document.getElementById('sumStainless').innerText = sumStainless.toFixed(1); 
+        }
+
+        function openHistory() {
+            const dateInput = document.getElementById('filterDate');
+            if(!dateInput.value) {
+                const d = new Date();
+                const yyyy = d.getFullYear();
+                const mm = String(d.getMonth() + 1).padStart(2, '0');
+                const dd = String(d.getDate()).padStart(2, '0');
+                dateInput.value = `${yyyy}-${mm}-${dd}`;
+            }
+            renderHistoryUI();
+            document.getElementById('historyModal').style.display = 'flex';
+        }
+
+        function deleteBill(key, billNo) {
+            if(confirm(`คุณแน่ใจหรือไม่ที่จะลบบิลเลขที่ ${billNo} ?\n(ข้อมูลนี้จะถูกลบออกจากคลาวด์ถาวร)`)) {
+                db.ref('pos_bills/' + key).remove();
+            }
+        }
+
+        function printSummary() {
+            const currentBills = getFilteredBills();
+            if (currentBills.length === 0) return alert('ไม่มีรายการให้สรุปครับ');
+            
+            const filterDate = document.getElementById('filterDate').value;
+            const printTitleDate = filterDate ? `ประจำวันที่: ${filterDate}` : `รวมทุกวันทั้งหมด`;
+            
+            const totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0); 
+            const currentDate = new Date().toLocaleString('th-TH'); 
+            let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
+            
+            currentBills.forEach(bill => { bill.items.forEach(item => { if (item.name === "ล.หนา") sumNa += item.weight; if (item.name === "ล.ธรรมดา") sumTham += item.weight; if (item.name === "ล.บาง") sumBang += item.weight; if (item.category === "ทองแดง") sumCopper += item.weight; if (item.category === "ทองเหลือง") sumBrass += item.weight; if (item.category === "เลส") sumStainless += item.weight; }); });
+            
+            document.getElementById('printArea').innerHTML = `<div class="slip-header"><h3>สรุปยอด (Z-Report)</h3><p>${printTitleDate}</p><p>เวลาพิมพ์: ${currentDate}</p></div><hr class="slip-divider"><table class="slip-table" style="font-size: 14px;"><tr><td style="padding: 10px 0;">จำนวนบิลรับซื้อ:</td><td class="text-right" style="font-weight:bold;">${currentBills.length} บิล</td></tr><tr><td style="padding: 10px 0;">ยอดจ่ายรวมทั้งสิ้น:</td><td class="text-right" style="font-weight:bold; font-size: 16px;">${totalDayAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</td></tr></table><hr class="slip-divider"><div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">📊 สรุปน้ำหนักรับซื้อสุทธิ (กก.)</div><table class="slip-table" style="font-size: 13px;"><tr><td style="padding: 4px 0;">- ล.หนา</td><td class="text-right" style="font-weight:bold;">${sumNa.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">- ล.ธรรมดา</td><td class="text-right" style="font-weight:bold;">${sumTham.toFixed(1)}</td></tr><tr><td style="padding: 4px 0; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">- ล.บาง</td><td class="text-right" style="font-weight:bold; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">${sumBang.toFixed(1)}</td></tr><tr><td style="padding: 8px 0 4px 0;">🔥 ทองแดงรวม</td><td class="text-right" style="font-weight:bold; padding-top: 8px;">${sumCopper.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">✨ ทองเหลืองรวม</td><td class="text-right" style="font-weight:bold;">${sumBrass.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">⚙️ เลสรวม</td><td class="text-right" style="font-weight:bold;">${sumStainless.toFixed(1)}</td></tr></table><hr class="slip-divider"><div style="text-align: center; margin-top: 40px; font-size: 12px;">ผู้ตรวจนับเงิน........................................</div>`;
+            window.print();
+        }
+
+        function exportToCSV() {
+            const currentBills = getFilteredBills();
+            if (currentBills.length === 0) return alert('ไม่มีรายการให้ส่งออกครับ');
+            
+            let csvContent = "เลขที่บิล,วันที่-เวลา,หมวดหมู่,รายการสินค้า,ราคา/หน่วย,สมการน้ำหนัก,น้ำหนักสุทธิ,รวมเงิน(รายการ),ยอดรวมสุทธิทั้งบิล(บาท)\n";
+            currentBills.forEach(bill => { let isFirstItem = true; bill.items.forEach(item => { let row = [ bill.billNo, `"${bill.date}"`, item.category, item.name, item.price, `"${item.weightString}"`, item.weight, item.total, isFirstItem ? bill.total : "" ]; csvContent += row.join(",") + "\n"; isFirstItem = false; }); });
+            const BOM = "\uFEFF"; const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); const url = URL.createObjectURL(blob);
+            const today = new Date(); const dateStr = `${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`;
+            link.setAttribute("href", url); link.setAttribute("download", `รายงานรับซื้อ_${dateStr}.csv`); link.style.visibility = 'hidden'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        }
+
+        function clearHistory() { 
+            const filterDate = document.getElementById('filterDate') ? document.getElementById('filterDate').value : '';
+            const msg = filterDate ? `คุณต้องการล้างประวัติบิลของวันที่เลือก (${filterDate}) ใช่หรือไม่?\n(ข้อมูลจะถูกลบถาวร)` : `⚠️ คำเตือน: คุณกำลังเลือกล้างประวัติบิล **ทั้งหมดทุกวัน** ใช่หรือไม่?\n(ข้อมูลจะหายไปทั้งหมด!)`;
+            
+            if(confirm(msg)) { 
+                const currentBills = getFilteredBills();
+                currentBills.forEach(bill => {
+                    db.ref('pos_bills/' + bill.key).remove();
+                });
+            } 
+        }
+        
+        init();
+    
         function openCustomModal() {
             document.getElementById('customName').value = '';
             document.getElementById('customPrice').value = '';
@@ -674,102 +736,6 @@
             updateCartUI();
         }
 
-        function generatePrintSlip(billData) {
-            const printDiv = document.getElementById('printArea');
-            let itemsHtml = '';
-            
-            billData.items.forEach(item => {
-                itemsHtml += `
-                    <tr>
-                        <td>${item.name}</td>
-                        <td class="text-right">${item.weight}</td>
-                        <td class="text-right">${item.price.toFixed(2)}</td>
-                        <td class="text-right">${item.total.toFixed(2)}</td>
-                    </tr>
-                `;
-            });
-
-            printDiv.innerHTML = `
-                <div class="slip-header">
-                    <h3>ร้าน POP ค้าของเก่า (สาขา 2)</h3>
-                    <p>โทร. 0XX-XXX-XXXX</p>
-                    <p>วันที่: ${new Date(billData.timestamp).toLocaleString('th-TH')}</p>
-                </div>
-                <div class="slip-divider"></div>
-                <table class="slip-table">
-                    <thead>
-                        <tr>
-                            <th>รายการ</th>
-                            <th class="text-right">นน.</th>
-                            <th class="text-right">ราคา</th>
-                            <th class="text-right">รวม</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${itemsHtml}
-                    </tbody>
-                </table>
-                <div class="slip-divider"></div>
-                <div class="slip-total">
-                    รวมทั้งสิ้น: ${billData.total.toLocaleString('th-TH', {minimumFractionDigits: 2})} บาท
-                </div>
-                <p style="text-align: center; font-size: 10px; margin-top: 15px;">ขอบคุณที่ใช้บริการครับ</p>
-            `;
-            window.print();
-        }
-
-        function exportToCSV() {
-            let csvContent = "data:text/csv;charset=utf-8,\uFEFF";
-            csvContent += "วันที่,รายการ,น้ำหนัก,ราคา/หน่วย,รวม\n";
-            
-            const filterDateStr = document.getElementById('filterDate').value;
-            let filteredBills = globalBills;
-            if (filterDateStr) {
-                const dateObj = new Date(filterDateStr);
-                const thaiDateStr = dateObj.toLocaleDateString('th-TH');
-                filteredBills = globalBills.filter(b => b.dateStr === thaiDateStr);
-            }
-
-            filteredBills.forEach(bill => {
-                let date = new Date(bill.timestamp).toLocaleString('th-TH');
-                if (bill.items) {
-                    bill.items.forEach(item => {
-                        csvContent += `${date},${item.name},${item.weightString},${item.price},${item.total}\n`;
-                    });
-                }
-            });
-            
-            var encodedUri = encodeURI(csvContent);
-            var link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", "summary_report.csv");
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        function clearHistory() {
-            if (confirm('⚠️ คุณแน่ใจหรือไม่ว่าต้องการล้างข้อมูลประวัติ ที่กำลังแสดงอยู่นี้ ทั้งหมด? (ลบแล้วกู้คืนไม่ได้)')) {
-                const filterDateStr = document.getElementById('filterDate').value;
-                let filteredBills = globalBills;
-                if (filterDateStr) {
-                    const dateObj = new Date(filterDateStr);
-                    const thaiDateStr = dateObj.toLocaleDateString('th-TH');
-                    filteredBills = globalBills.filter(b => b.dateStr === thaiDateStr);
-                }
-                
-                filteredBills.forEach(bill => {
-                    db.ref('bills/' + bill.key).remove();
-                });
-                alert('ดำเนินการลบข้อมูลเรียบร้อยแล้ว');
-            }
-        }
-
-        function printSummary() {
-            window.print();
-        }
-
-        window.onload = init;
     </script>
 </body>
 </html>
