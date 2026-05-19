@@ -219,6 +219,7 @@
             </div>
         </div>
     </div>
+
     <div class="modal-overlay" id="historyModal">
         <div class="modal-content">
             <h2 style="margin-bottom: 15px; text-align: center; color: var(--dark); font-size: 20px;">📜 ประวัติ / สรุปยอด</h2>
@@ -239,7 +240,8 @@
                 <hr style="border: 0; border-top: 1px dashed var(--border); margin: 8px 0;">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #b45309;"><span>🔥 ทองแดงรวม:</span><strong id="sumCopper">0.0</strong></div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px; color: #a16207;"><span>✨ ทองเหลืองรวม:</span><strong id="sumBrass">0.0</strong></div>
-                <div style="display: flex; justify-content: space-between; color: #334155;"><span>⚙️ เลสรวม:</span><strong id="sumStainless">0.0</strong></div>
+                <div style="display: flex; justify-content: space-between; color: #334155; margin-bottom: 4px;"><span>⚙️ เลสรวม:</span><strong id="sumStainless">0.0</strong></div>
+                <div style="display: flex; justify-content: space-between; color: #2563eb;"><span>📦 กระดาษรวม:</span><strong id="sumPaper">0.0</strong></div>
             </div>
             <div id="historyList" style="max-height: 250px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px; background: #f8fafc; border-radius: 12px; padding: 10px;"></div>
             <div style="display: flex; gap: 10px; margin-bottom: 10px;">
@@ -256,7 +258,6 @@
     <div id="printArea"></div>
 
     <script>
-        // Updated with new credentials here
         const firebaseConfig = {
             apiKey: "AIzaSyCxFoL6fkV8Vy900VsbRNWEs642gXuG_AE",
             authDomain: "pop2-e301c.firebaseapp.com",
@@ -302,7 +303,7 @@
             { id: 29, name: "เผา", category: "ทองแดง", price: 310.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKavetfTq7yVz6HrrcowTqaX6eaDPON-jwBQ&s" },
             { id: 30, name: "ชุป", category: "ทองแดง", price: 300.0, img: "https://honestcable.com/wp-content/uploads/2025/10/Bare-vs-Tinned-Copper-Wire.jpg" },
             { id: 31, name: "เหลือง", category: "ทองเหลือง", price: 190.0, img: "https://www.maxsteelthai.com/wp-content/uploads/2019/08/image621.png" },
-            { id: 32, name: "น.หนา", category: "เนียม", price: 55.0, img: "https://www.guenter.co.th/wp-content/uploads/2022/12/%E0%B8%AD%E0%B8%A5%E0%B8%B9%E0%B8%A1%E0%B8%B4%E0%B9%80%E0%B8%99%E0%B8%B5%E0%B8%A2%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%99-Aluminum-Flat-Bar-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%82%E0%B8%99%E0%B8%B2%E0%B8%94-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%84%E0%B8%A7%E0%B8%B2%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B2-%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%80%E0%B8%95%E0%B9%87%E0%B8%A1-%E0%B8%AA%E0%B8%B1%E0%B9%88%E0%B8%87%E0%B8%95%E0%B8%B1%E0%B8%94-Guenter.co_.th_.jpg" },
+            { id: 32, name: "น.หนา", category: "เนียม", price: 55.0, img: "https://www.guenter.co.th/wp-content/uploads/2022/12/%E0%B8%AD%E0%B8%A5%E0%B8%B9%E0%B8%A1%E0%B8%B4%E0%B9%80%E0%B8%99%E0%B8%B5%E0%B8%A2%E0%B8%A1%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%81%E0%B8%9A%E0%B8%99-Aluminum-Flat-Bar-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%82%E0%B8%99%E0%B8%B2%E0%B8%94-%E0%B8%AB%E0%B8%A5%E0%B8%B2%E0%B8%A2%E0%B8%84%E0%B8%A7%E0%B8%A1%E0%B8%AB%E0%B8%99%E0%B8%B2-%E0%B9%80%E0%B8%AA%E0%B9%89%E0%B8%99%E0%B9%80%E0%B8%95%E0%B9%87%E0%B8%A1-%E0%B8%AA%E0%B8%B1%E0%B9%88%E0%B8%87%E0%B8%95%E0%B8%B1%E0%B8%94-Guenter.co_.th_.jpg" },
             { id: 33, name: "น.บาง", category: "เนียม", price: 55.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-7Vvp9mG0Y-AlRNRCZ-KQk2PUSN3qDzBPvQ&s" },
             { id: 34, name: "น.ฉาก", category: "เนียม", price: 65.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTU94RpXGELZRavoq2Q73QIgSMQ01fNsNvwIw&s" },
             { id: 35, name: "น.ป๋อง", category: "เนียม", price: 60.0, img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-U7yKzclqv5tN7zqyofPZ-pYf6fQ1_jgQGg&s" },
@@ -361,7 +362,7 @@
                 if(document.getElementById('historyModal').style.display === 'flex') { renderHistoryUI(); }
             });
         }
-        
+
         function init() { setupFirebaseListeners(); renderCategories(); renderItems('ทั้งหมด'); }
 
         function renderCategories() {
@@ -531,7 +532,7 @@
         }
 
         function renderReceiptHTML(billNo, date, items, totalAmount) {
-            return `<div class="slip-header"><h3 style="margin-bottom: 5px; font-size: 18px;">POP RECYCLE</h3><p style="font-size: 12px; margin-bottom: 2px;"><p style="font-size: 12px; margin-bottom: 8px;">เบอร์ติดต่อ: 0945498354</p><p style="font-weight: bold; font-size: 14px;">ใบเสร็จรับเงิน</p><p>วันที่: ${date}</p><p>เลขที่บิล: ${billNo}</p></div>
+            return `<div class="slip-header"><h3 style="margin-bottom: 5px; font-size: 18px;">POP RECYCLE</h3><p style="font-size: 12px; margin-bottom: 8px;">เบอร์ติดต่อ: 0945498354</p><p style="font-weight: bold; font-size: 14px;">ใบเสร็จรับเงิน</p><p>วันที่: ${date}</p><p>เลขที่บิล: ${billNo}</p></div>
             <hr class="slip-divider">
             <table class="slip-table">
                 <thead><tr><th>รายการ</th><th class="text-right">รวม(฿)</th></tr></thead>
@@ -597,7 +598,8 @@
             const historyList = document.getElementById('historyList'); 
             const currentBills = getFilteredBills(); 
             
-            let totalDayAmount = 0; let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
+            let totalDayAmount = 0; 
+            let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0, sumPaper = 0;
             
             if (currentBills.length === 0) { 
                 historyList.innerHTML = '<p style="text-align:center; color:#94a3b8; margin-top: 15px;">ไม่พบประวัติในวันที่เลือก</p>'; 
@@ -611,6 +613,7 @@
                         if (item.category === "ทองแดง") sumCopper += item.weight; 
                         if (item.category === "ทองเหลือง") sumBrass += item.weight; 
                         if (item.category === "เลส") sumStainless += item.weight; 
+                        if (item.category === "ดาษ") sumPaper += item.weight;
                     }); 
                 });
                 
@@ -638,6 +641,7 @@
             document.getElementById('sumCopper').innerText = sumCopper.toFixed(1); 
             document.getElementById('sumBrass').innerText = sumBrass.toFixed(1); 
             document.getElementById('sumStainless').innerText = sumStainless.toFixed(1); 
+            document.getElementById('sumPaper').innerText = sumPaper.toFixed(1);
         }
 
         function openHistory() {
@@ -666,13 +670,23 @@
             const filterDate = document.getElementById('filterDate').value;
             const printTitleDate = filterDate ? `ประจำวันที่: ${filterDate}` : `รวมทุกวันทั้งหมด`;
             
-            const totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0); 
-            const currentDate = new Date().toLocaleString('th-TH'); 
-            let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0;
+            const totalDayAmount = currentBills.reduce((sum, bill) => sum + bill.total, 0);
+            const currentDate = new Date().toLocaleString('th-TH');
+            let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0, sumPaper = 0;
             
-            currentBills.forEach(bill => { bill.items.forEach(item => { if (item.name === "ล.หนา") sumNa += item.weight; if (item.name === "ล.ธรรมดา") sumTham += item.weight; if (item.name === "ล.บาง") sumBang += item.weight; if (item.category === "ทองแดง") sumCopper += item.weight; if (item.category === "ทองเหลือง") sumBrass += item.weight; if (item.category === "เลส") sumStainless += item.weight; }); });
+            currentBills.forEach(bill => { 
+                bill.items.forEach(item => { 
+                    if (item.name === "ล.หนา") sumNa += item.weight; 
+                    if (item.name === "ล.ธรรมดา") sumTham += item.weight; 
+                    if (item.name === "ล.บาง") sumBang += item.weight; 
+                    if (item.category === "ทองแดง") sumCopper += item.weight; 
+                    if (item.category === "ทองเหลือง") sumBrass += item.weight; 
+                    if (item.category === "เลส") sumStainless += item.weight; 
+                    if (item.category === "ดาษ") sumPaper += item.weight;
+                }); 
+            });
             
-            document.getElementById('printArea').innerHTML = `<div class="slip-header"><h3>สรุปยอด (Z-Report)</h3><p>${printTitleDate}</p><p>เวลาพิมพ์: ${currentDate}</p></div><hr class="slip-divider"><table class="slip-table" style="font-size: 14px;"><tr><td style="padding: 10px 0;">จำนวนบิลรับซื้อ:</td><td class="text-right" style="font-weight:bold;">${currentBills.length} บิล</td></tr><tr><td style="padding: 10px 0;">ยอดจ่ายรวมทั้งสิ้น:</td><td class="text-right" style="font-weight:bold; font-size: 16px;">${totalDayAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</td></tr></table><hr class="slip-divider"><div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">📊 สรุปน้ำหนักรับซื้อสุทธิ (กก.)</div><table class="slip-table" style="font-size: 13px;"><tr><td style="padding: 4px 0;">- ล.หนา</td><td class="text-right" style="font-weight:bold;">${sumNa.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">- ล.ธรรมดา</td><td class="text-right" style="font-weight:bold;">${sumTham.toFixed(1)}</td></tr><tr><td style="padding: 4px 0; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">- ล.บาง</td><td class="text-right" style="font-weight:bold; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">${sumBang.toFixed(1)}</td></tr><tr><td style="padding: 8px 0 4px 0;">🔥 ทองแดงรวม</td><td class="text-right" style="font-weight:bold; padding-top: 8px;">${sumCopper.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">✨ ทองเหลืองรวม</td><td class="text-right" style="font-weight:bold;">${sumBrass.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">⚙️ เลสรวม</td><td class="text-right" style="font-weight:bold;">${sumStainless.toFixed(1)}</td></tr></table><hr class="slip-divider"><div style="text-align: center; margin-top: 40px; font-size: 12px;">ผู้ตรวจนับเงิน........................................</div>`;
+            document.getElementById('printArea').innerHTML = `<div class="slip-header"><h3>สรุปยอด (Z-Report)</h3><p>${printTitleDate}</p><p>เวลาพิมพ์: ${currentDate}</p></div><hr class="slip-divider"><table class="slip-table" style="font-size: 14px;"><tr><td style="padding: 10px 0;">จำนวนบิลรับซื้อ:</td><td class="text-right" style="font-weight:bold;">${currentBills.length} บิล</td></tr><tr><td style="padding: 10px 0;">ยอดจ่ายรวมทั้งสิ้น:</td><td class="text-right" style="font-weight:bold; font-size: 16px;">${totalDayAmount.toLocaleString(undefined, {minimumFractionDigits: 2})} ฿</td></tr></table><hr class="slip-divider"><div style="font-weight: bold; margin-bottom: 5px; font-size: 14px;">📊 สรุปน้ำหนักรับซื้อสุทธิ (กก.)</div><table class="slip-table" style="font-size: 13px;"><tr><td style="padding: 4px 0;">- ล.หนา</td><td class="text-right" style="font-weight:bold;">${sumNa.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">- ล.ธรรมดา</td><td class="text-right" style="font-weight:bold;">${sumTham.toFixed(1)}</td></tr><tr><td style="padding: 4px 0; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">- ล.บาง</td><td class="text-right" style="font-weight:bold; border-bottom: 1px dashed #ccc; padding-bottom: 8px;">${sumBang.toFixed(1)}</td></tr><tr><td style="padding: 8px 0 4px 0;">🔥 ทองแดงรวม</td><td class="text-right" style="font-weight:bold; padding-top: 8px;">${sumCopper.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">✨ ทองเหลืองรวม</td><td class="text-right" style="font-weight:bold;">${sumBrass.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">⚙️ เลสรวม</td><td class="text-right" style="font-weight:bold;">${sumStainless.toFixed(1)}</td></tr><tr><td style="padding: 4px 0;">📦 กระดาษรวม</td><td class="text-right" style="font-weight:bold;">${sumPaper.toFixed(1)}</td></tr></table><hr class="slip-divider"><div style="text-align: center; margin-top: 40px; font-size: 12px;">ผู้ตรวจนับเงิน........................................</div>`;
             window.print();
         }
 
@@ -680,32 +694,65 @@
             const currentBills = getFilteredBills();
             if (currentBills.length === 0) return alert('ไม่มีรายการให้ส่งออกครับ');
             
+            let totalDayAmount = 0; 
+            let sumNa = 0, sumTham = 0, sumBang = 0, sumCopper = 0, sumBrass = 0, sumStainless = 0, sumPaper = 0;
+            currentBills.forEach(bill => { 
+                totalDayAmount += bill.total;
+                bill.items.forEach(item => { 
+                    if (item.name === "ล.หนา") sumNa += item.weight; 
+                    if (item.name === "ล.ธรรมดา") sumTham += item.weight; 
+                    if (item.name === "ล.บาง") sumBang += item.weight; 
+                    if (item.category === "ทองแดง") sumCopper += item.weight; 
+                    if (item.category === "ทองเหลือง") sumBrass += item.weight; 
+                    if (item.category === "เลส") sumStainless += item.weight; 
+                    if (item.category === "ดาษ") sumPaper += item.weight;
+                }); 
+            });
+
             let csvContent = "เลขที่บิล,วันที่-เวลา,หมวดหมู่,รายการสินค้า,ราคา/หน่วย,สมการน้ำหนัก,น้ำหนักสุทธิ,รวมเงิน(รายการ),ยอดรวมสุทธิทั้งบิล(บาท)\n";
-            currentBills.forEach(bill => { let isFirstItem = true; bill.items.forEach(item => { let row = [ bill.billNo, `"${bill.date}"`, item.category, item.name, item.price, `"${item.weightString}"`, item.weight, item.total, isFirstItem ? bill.total : "" ]; csvContent += row.join(",") + "\n"; isFirstItem = false; }); });
+            currentBills.forEach(bill => { 
+                let isFirstItem = true; 
+                bill.items.forEach(item => { 
+                    let row = [ bill.billNo, `"${bill.date}"`, item.category, item.name, item.price, `"${item.weightString}"`, item.weight, item.total, isFirstItem ? bill.total : "" ]; 
+                    csvContent += row.join(",") + "\n"; 
+                    isFirstItem = false; 
+                }); 
+            });
+            
+            // เพิ่มส่วนสรุปทท้ายไฟล์ Excel (CSV) ด้านล่าง
+            csvContent += "\n,,,,,สรุปยอดรวมสุทธิ (Z-Report)\n";
+            csvContent += `,,,,,จำนวนบิลรับซื้อ,${currentBills.length},บิล\n`;
+            csvContent += `,,,,,ยอดจ่ายรวมทั้งสิ้น,${totalDayAmount.toFixed(2)},บาท\n`;
+            csvContent += `,,,,,- ล.หนารวม,${sumNa.toFixed(1)},กก.\n`;
+            csvContent += `,,,,,- ล.ธรรมดารวม,${sumTham.toFixed(1)},กก.\n`;
+            csvContent += `,,,,,- ล.บางรวม,${sumBang.toFixed(1)},กก.\n`;
+            csvContent += `,,,,,🔥 ทองแดงรวม,${sumCopper.toFixed(1)},กก.\n`;
+            csvContent += `,,,,,✨ ทองเหลืองรวม,${sumBrass.toFixed(1)},กก.\n`;
+            csvContent += `,,,,,⚙️ เลสรวม,${sumStainless.toFixed(1)},กก.\n`;
+            csvContent += `,,,,,📦 กระดาษรวม,${sumPaper.toFixed(1)},กก.\n`;
+
             const BOM = "\uFEFF"; const blob = new Blob([BOM + csvContent], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); const url = URL.createObjectURL(blob);
             const today = new Date(); const dateStr = `${today.getDate()}-${today.getMonth()+1}-${today.getFullYear()}`;
             link.setAttribute("href", url); link.setAttribute("download", `รายงานรับซื้อ_${dateStr}.csv`); link.style.visibility = 'hidden'; document.body.appendChild(link); link.click(); document.body.removeChild(link);
         }
 
-        function clearHistory() { 
+        function clearHistory() {
             const filterDate = document.getElementById('filterDate') ? document.getElementById('filterDate').value : '';
             const msg = filterDate ? `คุณต้องการล้างประวัติบิลของวันที่เลือก (${filterDate}) ใช่หรือไม่?\n(ข้อมูลจะถูกลบถาวร)` : `⚠️ คำเตือน: คุณกำลังเลือกล้างประวัติบิล **ทั้งหมดทุกวัน** ใช่หรือไม่?\n(ข้อมูลจะหายไปทั้งหมด!)`;
             
-            if(confirm(msg)) { 
+            if(confirm(msg)) {
                 const currentBills = getFilteredBills();
-                currentBills.forEach(bill => {
-                    db.ref('pos_bills/' + bill.key).remove();
-                });
-            } 
+                currentBills.forEach(bill => { db.ref('pos_bills/' + bill.key).remove(); });
+            }
         }
-        
+
         init();
-    
+
         function openCustomModal() {
             document.getElementById('customName').value = '';
             document.getElementById('customPrice').value = '';
             document.getElementById('customWeight').value = '';
-            setActiveInput('customPrice'); 
+            setActiveInput('customPrice');
             document.getElementById('customModal').style.display = 'flex';
         }
 
@@ -735,7 +782,6 @@
             closeModal('customModal');
             updateCartUI();
         }
-
     </script>
 </body>
 </html>
